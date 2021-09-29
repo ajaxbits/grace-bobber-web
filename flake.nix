@@ -28,7 +28,6 @@
         shellHook = ''
           export NODE_PATH=${nodeEnv.shell.nodeDependencies}/lib/node_modules
         '';
-          # ln -s $NODE_PATH node_modules
       };
     };
 }
