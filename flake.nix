@@ -24,9 +24,11 @@
             optipng
             svgo
             fd
+            exiftool
           ];
         shellHook = ''
           export NODE_PATH=${nodeEnv.shell.nodeDependencies}/lib/node_modules
+          exiftool -title="Grace Bobber Resume" images/Grace-Bobber-Resume.pdf
         '';
       };
     };
