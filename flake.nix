@@ -14,23 +14,26 @@
         nodeEnv = pkgs.callPackage ./default.nix { };
         revision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}";
         inherit (gitignore.lib) gitignoreSource;
-      in rec {
-        packages = with pkgs; {
-          gracebobberdotcom = stdenv.mkDerivation {
-            name = "gracebobberdotcom";
-            src = gitignoreSource ./.;
-            buildPhase = ''
-              ${pkgs.exiftool}/bin/exiftool -Title="Grace Bobber Resume" ./images/Grace-Bobber-Resume.pdf
-            '';
-            installPhase = ''
-              mkdir $out
-              cp -r ./* $out/
-            '';
-          };
 
-          ociImage = dockerTools.buildLayeredImage {
+        htmlSource = pkgs.stdenv.mkDerivation {
+          name = "gracebobberdotcom";
+          src = gitignoreSource ./.;
+          preferLocalBuild = true;
+          buildInputs = [ pkgs.exiftool ];
+          buildPhase = ''
+            exiftool -Title="Grace Bobber Resume" -q -P -overwrite_original_in_place ./images/Grace-Bobber-Resume.pdf
+          '';
+          installPhase = ''
+            mkdir $out
+            cp -r ./* $out/
+          '';
+        };
+
+      in rec {
+        packages = {
+          ociImage = pkgs.dockerTools.buildLayeredImage {
             name = "gracebobber.com";
-            contents = [ pkgs.python3Minimal packages.gracebobberdotcom ];
+            contents = [ pkgs.python3Minimal htmlSource ];
             tag = revision;
             config = {
               Cmd = [
@@ -38,6 +41,8 @@
                 "-m"
                 "http.server"
                 "8000"
+                "--directory"
+                "${htmlSource}"
               ];
             };
           };
