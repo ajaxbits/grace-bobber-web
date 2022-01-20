@@ -1,2 +1,190 @@
-a,abbr,address,article,aside,audio,blockquote,body,canvas,caption,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,iframe,img,ins,label,legend,li,main,mark,nav,ol,p,pre,q,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,ul,video{margin:0;padding:0;border:0}html{font-size:62.5%}body{font-size:2rem;line-height:1.5}*{font-family:inherit;font-size:inherit;line-height:inherit}a,a:visited{color:inherit}article,aside,footer,header,main,nav,section{display:block}*{box-sizing:border-box}:after,:before{box-sizing:inherit}table{border-collapse:collapse;border-spacing:0}ol,ul{list-style:none}img,video{max-width:100%}img{border-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:"";content:none}[hidden]{display:none!important}[disabled]{cursor:not-allowed}:focus:not(.focus-visible){outline:none}:focus:not(:focus-visible){outline:none}.sr-only{position:absolute;clip:rect(1px,1px,1px,1px);left:-9999px;top:-9999px}
-/*# sourceMappingURL=base.css.map */
+/* ***********************************
+ *
+ *    Ire's CSS Reset & Base
+ *
+ * *********************************** */
+
+/* Reset margin, padding, border
+ * *********************************** */
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+p,
+span,
+em,
+small,
+strong,
+sub,
+sup,
+mark,
+del,
+ins,
+strike,
+abbr,
+dfn,
+blockquote,
+q,
+cite,
+code,
+pre,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+div,
+section,
+article,
+main,
+aside,
+nav,
+header,
+hgroup,
+footer,
+img,
+figure,
+figcaption,
+address,
+time,
+audio,
+video,
+canvas,
+iframe,
+details,
+summary,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Typography
+   * *********************************** */
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 2rem;
+  line-height: 1.5;
+}
+
+* {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a,
+a:visited {
+  color: inherit;
+}
+
+/* Layout
+   * *********************************** */
+
+article,
+aside,
+footer,
+header,
+nav,
+section,
+main {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/* Elements
+   * *********************************** */
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+img {
+  border-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:after,
+blockquote:before,
+q:after,
+q:before {
+  content: "";
+  content: none;
+}
+
+/* Attributes & states
+   * *********************************** */
+
+[hidden] {
+  display: none !important;
+}
+
+[disabled] {
+  cursor: not-allowed;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Utility classes
+   * *********************************** */
+
+.sr-only {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  left: -9999px;
+  top: -9999px;
+}
+
+div .swipeOver-linkListWrapper {
+  color: red;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}

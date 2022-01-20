@@ -1,2 +1,44 @@
-.twoCol{display:grid;grid-template-columns:1.25fr 0.75fr;grid-gap:4rem;gap:4rem;margin:3rem 0}.left,.right{display:flex;flex-direction:column}.right{justify-content:space-around}.logo{width:100%;align-self:center;height:200px;object-fit:scale-down;background:black}.video{width:100%;height:200px}blockquote .video{height:100%}blockquote .twoCol{margin:unset}@media (max-width:1300px){.content{margin:0 5vw}}@media (max-width:775px){.twoCol{display:flex;flex-direction:column}}
+.twoCol {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  grid-gap: 4rem;
+  gap: 4rem;
+  margin: 3rem 0;
+}
+.left,
+.right {
+  display: flex;
+  flex-direction: column;
+}
+.right {
+  justify-content: space-around;
+}
+.logo {
+  width: 100%;
+  align-self: center;
+  height: 200px;
+  object-fit: scale-down;
+  background: black;
+}
+.video {
+  width: 100%;
+  height: 200px;
+}
+blockquote .video {
+  height: 100%;
+}
+blockquote .twoCol {
+  margin: unset;
+}
+@media (max-width: 1300px) {
+  .content {
+    margin: 0 5vw;
+  }
+}
+@media (max-width: 775px) {
+  .twoCol {
+    display: flex;
+    flex-direction: column;
+  }
+}
 /*# sourceMappingURL=thunk.css.map */
