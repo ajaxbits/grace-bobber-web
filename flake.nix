@@ -72,6 +72,11 @@
               svgo
               fd
               exiftool
+              rustc
+              cargo
+              systemfd
+              cargo-watch
+              cargo-edit
             ];
           shellHook = ''
             export NODE_PATH=${nodeEnv.shell.nodeDependencies}/lib/node_modules
