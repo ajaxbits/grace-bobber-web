@@ -111,7 +111,6 @@ hr {
   transform: scale(1.05);
 }
 
-
 @media all and (max-width: 750px) {
   .hero {
     display: flex;

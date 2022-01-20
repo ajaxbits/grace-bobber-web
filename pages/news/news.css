@@ -94,12 +94,16 @@ p {
 }
 
 #high-plateau {
-  background-color: #031519
+  background-color: #031519;
 }
 
 #ABCD {
-  background: rgb(217,229,249);
-  background: linear-gradient(180deg, rgba(217,229,249,1) 71%, rgba(249,250,254,1) 100%);
+  background: rgb(217, 229, 249);
+  background: linear-gradient(
+    180deg,
+    rgba(217, 229, 249, 1) 71%,
+    rgba(249, 250, 254, 1) 100%
+  );
 }
 
 /* * SPECIFIC EXCEPTION FOR JULIUS CAESAR IMAGE */

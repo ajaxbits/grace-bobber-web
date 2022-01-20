@@ -36,7 +36,7 @@
 }
 
 .banner-video-video {
-  width:50%;
+  width: 50%;
   left: 25%;
 }
 
@@ -54,6 +54,6 @@
   }
   .banner-video-item {
     grid-column: unset;
-    padding-bottom: 56.25%
+    padding-bottom: 56.25%;
   }
 }
