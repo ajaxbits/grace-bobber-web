@@ -1,7 +1,7 @@
 .twoCol {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: 4rem;
 }
 .title {
   font-style: italic;
@@ -53,21 +53,16 @@
 .linkButtons > .linkButton {
   padding: 2rem;
   border: 0.125rem solid #fff;
-  /* margin-top: 2rem; */
-  border-radius: 1.5rem;
-  background: hsla(0, 0%, 0%, 0.7);
   color: #fff;
   font-size: 2rem;
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
   transition: 0.15s ease-in-out;
-}
-
-.linkButtons > .linkButton:hover {
   color: hsla(0, 0%, 0%, 1);
   background-color: hsla(0, 0%, 100%, 0.75);
   border: 0.125vw solid #222222;
+  white-space: break-spaces;
 }
 
 @media all and (max-width: 1300px) {
@@ -108,119 +103,7 @@
   transform: scale(1.05);
 }
 
-.gig-heading {
-  font-style: italic;
-}
-
-.modal-content {
-  display: flex;
-  margin: auto;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 10;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.9);
-}
-
-.modal-open {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.modal-content {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  max-width: 700px;
-  height: 80%;
-}
-
-.modal-image {
-  max-height: 80%;
-  max-width: 700px;
-  object-fit: scale-down;
-}
-
-.modal-arrow-previous,
-.modal-arrow-next {
-  cursor: pointer;
-  width: 100px;
-  position: absolute;
-  z-index: 2;
-}
-.modal-arrow-previous {
-  padding: 20px 40px 20px 0;
-}
-
-.modal-arrow-next {
-  right: 0;
-  padding: 20px 0 20px 40px;
-}
-
-.modal-arrow-hidden {
-  opacity: 0;
-  cursor: initial;
-}
-
-.caption {
-  width: 80%;
-  max-width: 700px;
-  text-align: center;
-  color: #ccc;
-  padding-top: 10px;
-  font-style: italic;
-}
-
-/* Add Animation - Zoom in the Modal */
-.modal {
-  animation-name: zoom;
-  animation-duration: 0.2s;
-  transform-origin: top center;
-}
-
-@keyframes zoom {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.closeButton {
-  position: absolute;
-  top: 15px;
-  right: 35px;
-  color: #f1f1f1;
-  font-size: 40px;
-  font-weight: bold;
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-  color: #bbb;
-  text-decoration: none;
-  cursor: pointer;
-}
-
 @media only screen and (max-width: 700px) {
-  .modal-content,
-  .modal-image {
-    width: 100%;
-  }
-
   .twoCol {
     gap: 0.5rem;
   }
@@ -244,7 +127,16 @@
     margin-top: 0;
   }
 
-  /* .band-image { */
-  /*   max-height: 50vh; */
-  /* } */
+  .linkButtons {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    grid-column: span 2;
+    justify-content: space-around;
+    margin: 1rem 0 2rem 0;
+  }
+
+  .linkButtons > .linkButton {
+    margin: 2rem;
+  }
 }
