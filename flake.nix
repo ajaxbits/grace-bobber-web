@@ -11,7 +11,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        nodeEnv = pkgs.callPackage ./default.nix { };
+        nodeEnv = pkgs.callPackage ./nix { };
         revision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}";
         inherit (gitignore.lib) gitignoreSource;
 
@@ -29,7 +29,18 @@
           '';
         };
 
-      in rec {
+        node2nix = with pkgs; writeShellScriptBin "node2nix" ''
+          ${nodePackages.node2nix}/bin/node2nix \
+            --development \
+            -l package-lock.json \
+            -c ./nix/default.nix \
+            -o ./nix/node-packages.nix \
+            -e ./nix/node-env.nix
+        '';
+
+
+      in
+      rec {
         packages = {
           ociImage = pkgs.dockerTools.buildLayeredImage {
             name = "gracebobber.com";
