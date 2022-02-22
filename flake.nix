@@ -77,6 +77,7 @@
               systemfd
               cargo-watch
               cargo-edit
+              hugo
             ];
           shellHook = ''
             export NODE_PATH=${nodeEnv.shell.nodeDependencies}/lib/node_modules
