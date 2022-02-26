@@ -3,14 +3,23 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.inputs.nixpkgs.follows = "nixpkgs";
     gitignore.url = "github:hercules-ci/gitignore.nix";
+    gitignore.inputs.nixpkgs.follows = "nixpkgs";
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, flake-utils, gitignore }:
+  outputs = { self, nixpkgs, flake-utils, gitignore, rust-overlay }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
+        overlays = [ (import rust-overlay) ];
+        pkgs = import nixpkgs {
+          inherit system overlays;
+        };
+
         nodeEnv = pkgs.callPackage ./nix { };
         revision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}";
         inherit (gitignore.lib) gitignoreSource;
@@ -72,11 +81,12 @@
               svgo
               fd
               exiftool
-              rustc
-              cargo
-              systemfd
-              cargo-watch
+
+              rust-bin.stable."1.58.0".default
+              openssl
+              pkgconfig
               cargo-edit
+              cargo-watch
             ];
           shellHook = ''
             export NODE_PATH=${nodeEnv.shell.nodeDependencies}/lib/node_modules
