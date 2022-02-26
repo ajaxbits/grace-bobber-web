@@ -56,14 +56,12 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
         .collect();
     let mut html_files = Vec::with_capacity(markdown_files.len());
 
-    let mut previous_file = "".to_string();
+    let mut previous_file = &"".to_string();
+    let mut next_file = &"".to_string();
 
     for file in &markdown_files {
         // init next file
-        let next_file = file
-            .trim_start_matches(content_dir)
-            .replace(".md", ".html")
-            .to_owned();
+        next_file = file;
 
         let mut html = templates::HEADER.to_owned();
         let markdown = fs::read_to_string(&file)?;
@@ -90,7 +88,9 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
         html_files.push(html_file);
 
         // set next in order
-        previous_file = next_file;
+        previous_file = file
+            .replace(content_dir, output_dir)
+            .replace(".md", ".html");
     }
 
     write_index(html_files, output_dir)?;

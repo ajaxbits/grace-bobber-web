@@ -23,6 +23,16 @@ pub fn render_body(body: &str) -> String {
     )
 }
 
+pub fn render_footer(previous_file: &String, next_file: &String) -> String {
+    format!(
+        r#"  <div>
+    <a href="{}">previous_file</a>
+    <a href="{}">next_file</a>
+  </div></html>"#,
+        previous_file, next_file
+    )
+}
+
 pub const FOOTER: &str = r#"
 
 </html>
