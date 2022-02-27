@@ -23,14 +23,36 @@ pub fn render_body(body: &str) -> String {
     )
 }
 
-pub fn render_footer(previous_file: &String, next_file: &String) -> String {
-    format!(
-        r#"  <div>
-    <a href="{}">previous_file</a>
-    <a href="{}">next_file</a>
-  </div></html>"#,
-        previous_file, next_file
-    )
+pub fn render_footer(previous_file: Option<String>, next_file: Option<String>) -> String {
+    match (previous_file.clone(), next_file.clone()) {
+        (None, Some(..)) => {
+            format!(
+                r#"  <div>
+                    <a href="{}">next_file</a>
+                </div></html>"#,
+                next_file.unwrap()
+            )
+        }
+        (Some(..), None) => {
+            format!(
+                r#"  <div>
+                    <a href="{}">previous_file</a>
+                </div></html>"#,
+                previous_file.unwrap()
+            )
+        }
+        (Some(..), Some(..)) => {
+            format!(
+                r#"  <div>
+                    <a href="{}">previous_file</a>
+                    <a href="{}">next_file</a>
+                </div></html>"#,
+                previous_file.unwrap(),
+                next_file.unwrap()
+            )
+        }
+        _ => "ERROR LMAO".to_string(),
+    }
 }
 
 pub const FOOTER: &str = r#"

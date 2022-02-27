@@ -56,41 +56,53 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
         .collect();
     let mut html_files = Vec::with_capacity(markdown_files.len());
 
-    let mut previous_file = "".to_string();
+    let mut iterator = markdown_files.iter().enumerate().peekable();
+    let mut previous_file: Option<String> = None;
+    loop {
+        match iterator.next() {
+            Some(current_item) => {
+                let current_file = current_item.1;
+                let next_file = match iterator.peek() {
+                    None => None,
+                    Some(_next_file) => Some(
+                        iterator
+                            .peek()
+                            .unwrap()
+                            .1
+                            .trim_start_matches(content_dir)
+                            .replace(".md", ".html"),
+                    ),
+                };
 
-    for file in &markdown_files {
-        // init next file
-        let next_file = file
-            .trim_start_matches(content_dir)
-            .replace(".md", ".html")
-            .to_owned();
+                let mut html = templates::HEADER.to_owned();
+                let markdown = fs::read_to_string(&current_file)?;
+                let parser =
+                    pulldown_cmark::Parser::new_ext(&markdown, pulldown_cmark::Options::all());
 
-        let mut html = templates::HEADER.to_owned();
-        let markdown = fs::read_to_string(&file)?;
+                // ok, this is where we parse the markdown
 
-        // ok, this is where we parse the markdown
-        let parser = pulldown_cmark::Parser::new_ext(&markdown, pulldown_cmark::Options::all());
+                let mut body = String::new();
+                pulldown_cmark::html::push_html(&mut body, parser);
+                html.push_str(templates::render_body(&body).as_str());
+                html.push_str(templates::render_footer(previous_file, next_file).as_str());
 
-        let mut body = String::new();
-        pulldown_cmark::html::push_html(&mut body, parser);
+                let html_file = current_file
+                    .replace(content_dir, output_dir)
+                    .replace(".md", ".html");
+                // set folder == public folder
+                let folder = Path::new(&html_file).parent().unwrap();
+                let _ = fs::create_dir_all(folder);
+                fs::write(&html_file, html)?;
+                html_files.push(html_file);
 
-        html.push_str(templates::render_body(&body).as_str());
-        html.push_str(templates::render_footer(&previous_file, &next_file).as_str());
-        // html.push_str(templates::FOOTER);
-
-        // replaces the names of files
-        let html_file = file
-            .replace(content_dir, output_dir)
-            .replace(".md", ".html");
-        // set folder == public folder
-        let folder = Path::new(&html_file).parent().unwrap();
-        let _ = fs::create_dir_all(folder);
-        fs::write(&html_file, html)?;
-
-        html_files.push(html_file);
-
-        // set next in order
-        previous_file = next_file;
+                previous_file = Some(
+                    current_file
+                        .trim_start_matches(content_dir)
+                        .replace(".md", ".html"),
+                );
+            }
+            _ => break,
+        }
     }
 
     write_index(html_files, output_dir)?;
