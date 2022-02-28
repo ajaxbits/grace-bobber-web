@@ -97,7 +97,6 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
                     ),
                 };
 
-                let mut html = templates::HEADER.to_owned();
                 let (header, markdown) = parse_markdown_file(&current_file);
                 let parser =
                     pulldown_cmark::Parser::new_ext(&markdown, pulldown_cmark::Options::all());
@@ -106,10 +105,14 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
 
                 let mut body = String::new();
                 let title = header.as_ref().unwrap()["title"].as_string().unwrap();
+                let mut html = templates::render_header(&title);
                 pulldown_cmark::html::push_html(&mut body, parser);
                 html.push_str(templates::render_body(&body).as_str());
                 html.push_str(templates::render_title(&title).as_str());
-                html.push_str(templates::render_footer(previous_file, next_file).as_str());
+                html.push_str(
+                    templates::render_bottom_navigation(previous_file, next_file).as_str(),
+                );
+                html.push_str(templates::FOOTER);
 
                 let html_file = current_file
                     .replace(content_dir, output_dir)
@@ -135,8 +138,7 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
 }
 
 fn write_index(files: Vec<String>, output_dir: &str) -> Result<(), anyhow::Error> {
-    let mut html = templates::HEADER.to_owned();
-    html.push_str(&templates::render_title("News"));
+    let mut html = templates::render_header("News");
     let body = files
         .into_iter()
         .map(|file| {
