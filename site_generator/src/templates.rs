@@ -6,9 +6,11 @@ pub const HEADER: &str = r#"<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
-  <title>Grace Bobber</title>
-
 "#;
+
+pub fn render_title(title: &str) -> String {
+    format!("<title>{} | Grace Bobber</title>\n", title)
+}
 
 pub fn render_body(body: &str) -> String {
     format!(

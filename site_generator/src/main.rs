@@ -1,4 +1,5 @@
 use axum::{http::StatusCode, service, Router};
+use gray_matter::{engine::YAML, Matter, Pod};
 use std::{convert::Infallible, fs, net::SocketAddr, path::Path, thread, time::Duration};
 use tower_http::services::ServeDir;
 
@@ -44,6 +45,15 @@ async fn main() -> Result<(), anyhow::Error> {
 
     Ok(())
 }
+fn parse_markdown_file(markdown_file_path: &String) -> (Option<Pod>, String) {
+    let markdown: String = fs::read_to_string(&markdown_file_path).unwrap();
+    let matter = Matter::<YAML>::new();
+    let markdown = matter.parse(&markdown);
+
+    let headers: Option<Pod> = markdown.data;
+    let content: String = markdown.content;
+    (headers, content)
+}
 
 fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error> {
     let _ = fs::remove_dir_all(output_dir);
@@ -75,15 +85,18 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
                 };
 
                 let mut html = templates::HEADER.to_owned();
-                let markdown = fs::read_to_string(&current_file)?;
+                let (header, markdown) = parse_markdown_file(&current_file);
+                // let markdown = fs::read_to_string(&current_file)?;
                 let parser =
                     pulldown_cmark::Parser::new_ext(&markdown, pulldown_cmark::Options::all());
 
                 // ok, this is where we parse the markdown
 
                 let mut body = String::new();
+                let title = header.as_ref().unwrap()["title"].as_string().unwrap();
                 pulldown_cmark::html::push_html(&mut body, parser);
                 html.push_str(templates::render_body(&body).as_str());
+                html.push_str(templates::render_title(&title).as_str());
                 html.push_str(templates::render_footer(previous_file, next_file).as_str());
 
                 let html_file = current_file
@@ -111,6 +124,7 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
 
 fn write_index(files: Vec<String>, output_dir: &str) -> Result<(), anyhow::Error> {
     let mut html = templates::HEADER.to_owned();
+    html.push_str(&templates::render_title("News"));
     let body = files
         .into_iter()
         .map(|file| {
