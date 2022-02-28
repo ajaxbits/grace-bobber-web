@@ -1,7 +1,10 @@
 use axum::{http::StatusCode, service, Router};
+use chrono::TimeZone;
 use gray_matter::{engine::YAML, Matter, Pod};
+use serde::Deserialize;
 use std::{convert::Infallible, fs, net::SocketAddr, path::Path, thread, time::Duration};
 use tower_http::services::ServeDir;
+use tuple_utils::Prepend;
 
 mod templates; // how we call in our templates
 const CONTENT_DIR: &str = "content"; // relative to the root cargo directory
@@ -58,12 +61,21 @@ fn parse_markdown_file(markdown_file_path: &String) -> (Option<Pod>, String) {
 fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error> {
     let _ = fs::remove_dir_all(output_dir);
 
+    // make vec with form [(path: String, haders: Option, content: String)]
     let markdown_files: Vec<String> = walkdir::WalkDir::new(content_dir)
         .into_iter()
         .filter_map(|e| e.ok())
         .filter(|e| e.path().display().to_string().ends_with(".md"))
         .map(|e| e.path().display().to_string())
         .collect();
+    let mut temp = Vec::with_capacity(markdown_files.len());
+    for file in &markdown_files {
+        let tuple = parse_markdown_file(&file).prepend(file.to_owned());
+        temp.push(tuple);
+    }
+    // temp.sort_by()
+    let markdown_files = temp;
+
     let mut html_files = Vec::with_capacity(markdown_files.len());
 
     let mut iterator = markdown_files.iter().enumerate().peekable();
@@ -71,7 +83,7 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
     loop {
         match iterator.next() {
             Some(current_item) => {
-                let current_file = current_item.1;
+                let current_file = &current_item.1 .0;
                 let next_file = match iterator.peek() {
                     None => None,
                     Some(_next_file) => Some(
@@ -79,6 +91,7 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
                             .peek()
                             .unwrap()
                             .1
+                             .0
                             .trim_start_matches(content_dir)
                             .replace(".md", ".html"),
                     ),
@@ -86,7 +99,6 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
 
                 let mut html = templates::HEADER.to_owned();
                 let (header, markdown) = parse_markdown_file(&current_file);
-                // let markdown = fs::read_to_string(&current_file)?;
                 let parser =
                     pulldown_cmark::Parser::new_ext(&markdown, pulldown_cmark::Options::all());
 
