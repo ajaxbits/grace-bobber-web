@@ -30,7 +30,7 @@ pub fn render_footer(previous_file: Option<String>, next_file: Option<String>) -
         (None, Some(..)) => {
             format!(
                 r#"  <div>
-                    <a href="{}">next_file</a>
+                    <a href="/news{}">next_file</a>
                 </div></html>"#,
                 next_file.unwrap()
             )
@@ -38,7 +38,7 @@ pub fn render_footer(previous_file: Option<String>, next_file: Option<String>) -
         (Some(..), None) => {
             format!(
                 r#"  <div>
-                    <a href="{}">previous_file</a>
+                    <a href="/news{}">previous_file</a>
                 </div></html>"#,
                 previous_file.unwrap()
             )
@@ -46,8 +46,8 @@ pub fn render_footer(previous_file: Option<String>, next_file: Option<String>) -
         (Some(..), Some(..)) => {
             format!(
                 r#"  <div>
-                    <a href="{}">previous_file</a>
-                    <a href="{}">next_file</a>
+                    <a href="/news{}">previous_file</a>
+                    <a href="/news{}">next_file</a>
                 </div></html>"#,
                 previous_file.unwrap(),
                 next_file.unwrap()

@@ -7,7 +7,7 @@ use tower_http::services::ServeDir;
 use tuple_utils::Prepend;
 
 mod templates; // how we call in our templates
-const CONTENT_DIR: &str = "content"; // relative to the root cargo directory
+const CONTENT_DIR: &str = "news_content"; // relative to the root cargo directory
 const PUBLIC_DIR: &str = "news";
 
 #[tokio::main]
@@ -30,22 +30,22 @@ async fn main() -> Result<(), anyhow::Error> {
 
     // we don't really need all this rendering going forward
     // all we really want is the html
-    let app = Router::new().nest(
-        "/",
-        service::get(ServeDir::new(PUBLIC_DIR)).handle_error(|error: std::io::Error| {
-            Ok::<_, Infallible>((
-                StatusCode::INTERNAL_SERVER_ERROR,
-                format!("Unhandled internal error: {}", error),
-            ))
-        }),
-    );
-
-    let addr = SocketAddr::from(([127, 0, 0, 1], 8080));
-    println!("serving site on {}", addr);
-    axum::Server::bind(&addr)
-        .serve(app.into_make_service())
-        .await?;
-
+    // let app = Router::new().nest(
+    //     "/",
+    //     service::get(ServeDir::new(PUBLIC_DIR)).handle_error(|error: std::io::Error| {
+    //         Ok::<_, Infallible>((
+    //             StatusCode::INTERNAL_SERVER_ERROR,
+    //             format!("Unhandled internal error: {}", error),
+    //         ))
+    //     }),
+    // );
+    //
+    // let addr = SocketAddr::from(([127, 0, 0, 1], 8080));
+    // println!("serving site on {}", addr);
+    // axum::Server::bind(&addr)
+    //     .serve(app.into_make_service())
+    //     .await?;
+    //
     Ok(())
 }
 fn parse_markdown_file(markdown_file_path: &String) -> (Option<Pod>, String) {
@@ -140,7 +140,8 @@ fn write_index(files: Vec<String>, output_dir: &str) -> Result<(), anyhow::Error
     let body = files
         .into_iter()
         .map(|file| {
-            let file = file.trim_start_matches(output_dir);
+            let file = format!("/news{}", file.trim_start_matches(output_dir));
+            // TODO fix this
             let title = file.trim_start_matches("/").trim_end_matches(".html");
             format!(r#"<a href="{}">{}</a>"#, file, title)
         })
