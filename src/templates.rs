@@ -1,4 +1,49 @@
-pub fn render_header(title: &str) -> String {
+use chrono::{NaiveDate, TimeZone};
+use scraper::{Html, Selector};
+use serde::Deserialize;
+use std::{convert::Infallible, fs, net::SocketAddr, path::Path, thread, time::Duration};
+
+use crate::CONTENT_DIR;
+
+#[derive(Debug)]
+pub struct Markdown {
+    pub file_name: String,
+    pub title: String,
+    pub date: chrono::NaiveDate,
+    pub image: String,
+    pub markdown_content: String,
+    pub html_content: String,
+}
+
+impl Markdown {
+    pub fn new(markdown_file_path: &String) -> Self {
+        let markdown: String = fs::read_to_string(&markdown_file_path).unwrap();
+        let matter = gray_matter::Matter::<gray_matter::engine::YAML>::new();
+
+        let markdown = matter.parse(&markdown);
+        let headers: Option<gray_matter::Pod> = markdown.data;
+        let markdown_content = markdown.content;
+
+        let parser =
+            pulldown_cmark::Parser::new_ext(&markdown_content, pulldown_cmark::Options::all());
+        let mut html_content = String::new();
+        pulldown_cmark::html::push_html(&mut html_content, parser);
+
+        Self {
+            file_name: markdown_file_path.to_owned(),
+            title: headers.as_ref().unwrap()["title"].as_string().unwrap(),
+            date: {
+                let date_string = headers.as_ref().unwrap()["date"].as_string().unwrap();
+                chrono::NaiveDate::parse_from_str(&date_string, "%Y-%m-%d").unwrap()
+            },
+            image: markdown_file_path.to_owned(),
+            markdown_content,
+            html_content,
+        }
+    }
+}
+
+pub fn render_header(markdown: &Markdown) -> String {
     format!(
         r#"<!DOCTYPE html>
 <!DOCTYPE html>
@@ -46,9 +91,6 @@ pub fn render_header(title: &str) -> String {
 
 		<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Work+Sans:ital,wght@0,400;0,450;1,400;1,450&display=swap"
-			rel="stylesheet"
-		/>
 		<link rel="stylesheet" href="/dist/styles/base.css" />
 		<link rel="stylesheet" href="/dist/styles/global.css" />
 		<link rel="stylesheet" href="/dist/styles/news.css" />
@@ -152,7 +194,7 @@ pub fn render_header(title: &str) -> String {
 			</div>
 
 "#,
-        render_title(title)
+        render_title(&markdown.title)
     )
 }
 
@@ -166,145 +208,128 @@ pub fn render_title(title: &str) -> String {
     )
 }
 
-pub fn render_body(body: &str) -> String {
+pub fn render_body(markdown: &Markdown) -> String {
     format!(
         r#"  <main class="content">
-        {}
-			</main>
-  "#,
-        body
+            <h2>{}</h2>
+            <h5 id={}><em>{}</em></h5>
+            <img src="../dist/images/hundred-days.jpg" alt="Hundred Days image">
+            <p>{}</p>
+		</main>
+        "#,
+        markdown.title,
+        markdown.date.to_string(),
+        markdown.date.format("%B %e, %Y"),
+        markdown.html_content
     )
 }
 
 pub fn render_bottom_navigation(
-    previous_file: Option<String>,
-    next_file: Option<String>,
+    next_article: Option<&Markdown>,
+    previous_article: Option<&Markdown>,
+    content_dir: &str,
 ) -> String {
-    match (previous_file.clone(), next_file.clone()) {
-        (None, Some(..)) => {
-            format!(
-                r#" <footer class="articleNavButtons">
-				<a href="" class="nextArticle">
-					<!-- Intentionally left blank for spacing -->
-				</a>
-				<a href=".{}" class="previousArticle">
-					<section class="previousArticle-text">
-						<span class="small-caps">Previous</span>
-						<h4>Duet with Mandy Gonzalez for ABCD</h4>
-						<span class="small-caps">May 17, 2021</span>
-					</section>
-					<svg
-						class="articleNavButtons-arrow"
-						role="img"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						aria-labelledby="chevronRightIconTitle"
-						stroke="hsl(0, 0%, 13%)"
-						stroke-width="0.6666666666666666"
-						stroke-linecap="square"
-						stroke-linejoin="miter"
-						fill="none"
-						color="hsl(0, 0%, 13%)"
-					>
-						<title id="chevronRightIconTitle">Chevron Right</title>
-						<polyline points="10 6 16 12 10 18 10 18" />
-					</svg>
-				</a>
+    fn generate_nav_wrapper(article_string: String) -> String {
+        format!(
+            r#" <footer class="articleNavButtons">
+            {}
 			</footer>
 		</section> "#,
-                next_file.unwrap()
-            )
-        }
-        (Some(..), None) => {
-            format!(
-                r#" <footer class="articleNavButtons">
-				<a href=".{}" class="nextArticle">
-					<svg
-						class="articleNavButtons-arrow"
-						role="img"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						aria-labelledby="chevronLeftIconTitle"
-						stroke="hsl(0, 0%, 13%)"
-						stroke-width="0.6666666666666666"
-						stroke-linecap="square"
-						stroke-linejoin="miter"
-						fill="none"
-						color="hsl(0, 0%, 13%)"
-					>
-						<title id="chevronLeftIconTitle">Chevron Left</title>
-						<polyline points="14 18 8 12 14 6 14 6" />
-					</svg>
-					<section class="nextArticle-text">
-						<span class="small-caps">Next</span>
-						<h4>Shirley Hamilton Representation</h4>
-						<span class="small-caps">March 29, 2020</span>
-					</section>
-				</a>
-				<a href="" class="previousArticle">
-					<!-- intentionally left blank -->
-				</a>
-			</footer></section> "#,
-                previous_file.unwrap()
-            )
-        }
-        (Some(..), Some(..)) => {
-            format!(
-                r#"<footer class="articleNavButtons">
-				<a href=".{}" class="nextArticle">
-					<svg
-						class="articleNavButtons-arrow"
-						role="img"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						aria-labelledby="chevronLeftIconTitle"
-						stroke="hsl(0, 0%, 13%)"
-						stroke-width="0.6666666666666666"
-						stroke-linecap="square"
-						stroke-linejoin="miter"
-						fill="none"
-						color="hsl(0, 0%, 13%)"
-					>
-						<title id="chevronLeftIconTitle">Chevron Left</title>
-						<polyline points="14 18 8 12 14 6 14 6" />
-					</svg>
-					<section class="nextArticle-text">
-						<span class="small-caps">Next</span>
-						<h4>"Mamma Mia!" @ Metropolis</h4>
-						<span class="small-caps">May 24, 2020</span>
-					</section>
-				</a>
-				<a href=".{}" class="previousArticle">
-					<section class="previousArticle-text">
-						<span class="small-caps">Previous</span>
-						<h4>"Knuffle Bunny" @ The Greenhouse</h4>
-						<span class="small-caps">March 5, 2020</span>
-					</section>
-					<svg
-						class="articleNavButtons-arrow"
-						role="img"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						aria-labelledby="chevronRightIconTitle"
-						stroke="hsl(0, 0%, 13%)"
-						stroke-width="0.6666666666666666"
-						stroke-linecap="square"
-						stroke-linejoin="miter"
-						fill="none"
-						color="hsl(0, 0%, 13%)"
-					>
-						<title id="chevronRightIconTitle">Chevron Right</title>
-						<polyline points="10 6 16 12 10 18 10 18" />
-					</svg>
-				</a>
-			</footer>
-		</section> "#,
-                previous_file.unwrap(),
-                next_file.unwrap(),
-            )
-        }
-        _ => "ERROR LMAO".to_string(),
+            article_string
+        )
     }
+    fn generate_next_article(next_article: Option<&Markdown>, content_dir: &str) -> String {
+        match next_article {
+            Some(next_article) => {
+                format!(
+                    r#" <a href=".{}" class="nextArticle">
+					<svg
+						class="articleNavButtons-arrow"
+						role="img"
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+						aria-labelledby="chevronLeftIconTitle"
+						stroke="hsl(0, 0%, 13%)"
+						stroke-width="0.6666666666666666"
+						stroke-linecap="square"
+						stroke-linejoin="miter"
+						fill="none"
+						color="hsl(0, 0%, 13%)"
+					>
+						<title id="chevronLeftIconTitle">Chevron Left</title>
+						<polyline points="14 18 8 12 14 6 14 6" />
+					</svg>
+					<section class="nextArticle-text">
+						<span class="small-caps">Next</span>
+						<h4>{}</h4>
+						<span class="small-caps">{}</span>
+					</section>
+				</a>
+			"#,
+                    next_article
+                        .file_name
+                        .trim_start_matches(content_dir)
+                        .replace(".md", ".html"),
+                    next_article.title,
+                    next_article.date.to_string()
+                )
+            }
+            None => r#"
+                <a href="" class="nextArticle">
+					<!-- intentionally left blank -->
+				</a> "#
+                .to_string(),
+        }
+    }
+    fn generate_previous_article(previous_article: Option<&Markdown>, content_dir: &str) -> String {
+        match previous_article {
+            Some(previous_article) => {
+                format!(
+                    r#" <a href=".{}" class="previousArticle">
+					<section class="previousArticle-text">
+						<span class="small-caps">Previous</span>
+						<h4>{}</h4>
+						<span class="small-caps">{}</span>
+					</section>
+					<svg
+						class="articleNavButtons-arrow"
+						role="img"
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+						aria-labelledby="chevronRightIconTitle"
+						stroke="hsl(0, 0%, 13%)"
+						stroke-width="0.6666666666666666"
+						stroke-linecap="square"
+						stroke-linejoin="miter"
+						fill="none"
+						color="hsl(0, 0%, 13%)"
+					>
+						<title id="chevronRightIconTitle">Chevron Right</title>
+						<polyline points="10 6 16 12 10 18 10 18" />
+					</svg>
+				</a>
+		"#,
+                    previous_article
+                        .file_name
+                        .trim_start_matches(content_dir)
+                        .replace(".md", ".html"),
+                    previous_article.title,
+                    previous_article.date.to_string()
+                )
+            }
+            None => r#"
+                <a href="" class="previousArticle">
+					<!-- intentionally left blank -->
+				</a> "#
+                .to_string(),
+        }
+    }
+
+    generate_nav_wrapper(format!(
+        "{}\n{}",
+        generate_next_article(next_article, content_dir),
+        generate_previous_article(previous_article, content_dir)
+    ))
 }
 
 pub const FOOTER: &str = r#"

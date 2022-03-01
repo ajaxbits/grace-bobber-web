@@ -1,120 +1,56 @@
-use axum::{http::StatusCode, service, Router};
-use chrono::TimeZone;
-use gray_matter::{engine::YAML, Matter, Pod};
-use serde::Deserialize;
 use std::{convert::Infallible, fs, net::SocketAddr, path::Path, thread, time::Duration};
-use tower_http::services::ServeDir;
-use tuple_utils::Prepend;
 
 mod templates; // how we call in our templates
+use templates::Markdown;
+
 const CONTENT_DIR: &str = "news_content"; // relative to the root cargo directory
 const PUBLIC_DIR: &str = "news";
 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
-    rebuild_site(CONTENT_DIR, PUBLIC_DIR).expect("Error initializing first build");
-
-    tokio::task::spawn_blocking(move || {
-        println!("listening for changes: {}", CONTENT_DIR);
-        let mut hotwatch = hotwatch::Hotwatch::new().expect("hotwatch failed to initialize!");
-        hotwatch
-            .watch(CONTENT_DIR, |_| {
-                println!("Rebuilding site");
-                rebuild_site(CONTENT_DIR, PUBLIC_DIR).expect("Rebuilding site");
-            })
-            .expect("failed to watch content folder!");
-        loop {
-            thread::sleep(Duration::from_secs(2)); // we sleep for a time between evals
-        }
-    });
-
-    // we don't really need all this rendering going forward
-    // all we really want is the html
-    // let app = Router::new().nest(
-    //     "/",
-    //     service::get(ServeDir::new(PUBLIC_DIR)).handle_error(|error: std::io::Error| {
-    //         Ok::<_, Infallible>((
-    //             StatusCode::INTERNAL_SERVER_ERROR,
-    //             format!("Unhandled internal error: {}", error),
-    //         ))
-    //     }),
-    // );
-    //
-    // let addr = SocketAddr::from(([127, 0, 0, 1], 8080));
-    // println!("serving site on {}", addr);
-    // axum::Server::bind(&addr)
-    //     .serve(app.into_make_service())
-    //     .await?;
-    //
+    rebuild_site(CONTENT_DIR, PUBLIC_DIR).expect("Error building site");
     Ok(())
-}
-fn parse_markdown_file(markdown_file_path: &String) -> (Option<Pod>, String) {
-    let markdown: String = fs::read_to_string(&markdown_file_path).unwrap();
-    let matter = Matter::<YAML>::new();
-    let markdown = matter.parse(&markdown);
-
-    let headers: Option<Pod> = markdown.data;
-    let content: String = markdown.content;
-    (headers, content)
 }
 
 fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error> {
     let _ = fs::remove_dir_all(output_dir);
 
-    // make vec with form [(path: String, haders: Option, content: String)]
-    let markdown_files: Vec<String> = walkdir::WalkDir::new(content_dir)
+    let markdown_files: Vec<Markdown> = walkdir::WalkDir::new(content_dir)
         .into_iter()
         .filter_map(|e| e.ok())
         .filter(|e| e.path().display().to_string().ends_with(".md"))
         .map(|e| e.path().display().to_string())
+        .map(|e| Markdown::new(&e))
         .collect();
-    let mut temp = Vec::with_capacity(markdown_files.len());
-    for file in &markdown_files {
-        let tuple = parse_markdown_file(&file).prepend(file.to_owned());
-        temp.push(tuple);
-    }
-    // temp.sort_by()
-    let markdown_files = temp;
 
     let mut html_files = Vec::with_capacity(markdown_files.len());
 
     let mut iterator = markdown_files.iter().enumerate().peekable();
-    let mut previous_file: Option<String> = None;
+    let mut next_article: Option<&Markdown> = None;
     loop {
         match iterator.next() {
             Some(current_item) => {
-                let current_file = &current_item.1 .0;
-                let next_file = match iterator.peek() {
+                let current_file = current_item.1;
+                let previous_article = match iterator.peek() {
                     None => None,
-                    Some(_next_file) => Some(
-                        iterator
-                            .peek()
-                            .unwrap()
-                            .1
-                             .0
-                            .trim_start_matches(content_dir)
-                            .replace(".md", ".html"),
-                    ),
+                    Some(_next_file) => Some(iterator.peek().unwrap().1),
                 };
 
-                let (header, markdown) = parse_markdown_file(&current_file);
-                let parser =
-                    pulldown_cmark::Parser::new_ext(&markdown, pulldown_cmark::Options::all());
-
-                // ok, this is where we parse the markdown
-
-                let mut body = String::new();
-                let title = header.as_ref().unwrap()["title"].as_string().unwrap();
-                let mut html = templates::render_header(&title);
-                pulldown_cmark::html::push_html(&mut body, parser);
-                html.push_str(templates::render_body(&body).as_str());
-                html.push_str(templates::render_title(&title).as_str());
+                let mut html = String::new();
+                html.push_str(templates::render_header(&current_file).as_str());
+                html.push_str(templates::render_body(&current_file).as_str());
                 html.push_str(
-                    templates::render_bottom_navigation(previous_file, next_file).as_str(),
+                    templates::render_bottom_navigation(
+                        next_article,
+                        previous_article,
+                        content_dir,
+                    )
+                    .as_str(),
                 );
                 html.push_str(templates::FOOTER);
 
                 let html_file = current_file
+                    .file_name
                     .replace(content_dir, output_dir)
                     .replace(".md", ".html");
                 // set folder == public folder
@@ -123,11 +59,7 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
                 fs::write(&html_file, html)?;
                 html_files.push(html_file);
 
-                previous_file = Some(
-                    current_file
-                        .trim_start_matches(content_dir)
-                        .replace(".md", ".html"),
-                );
+                next_article = Some(current_file);
             }
             _ => break,
         }
@@ -138,7 +70,16 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
 }
 
 fn write_index(files: Vec<String>, output_dir: &str) -> Result<(), anyhow::Error> {
-    let mut html = templates::render_header("News");
+    // TODO make cleaner
+    let mut index_object = Markdown {
+        file_name: "".to_owned(),
+        title: "News".to_owned(),
+        date: chrono::NaiveDate::from_ymd(2000, 1, 1),
+        image: "".to_owned(),
+        markdown_content: "".to_owned(),
+        html_content: "".to_owned(),
+    };
+    let mut html = templates::render_header(&index_object);
     let body = files
         .into_iter()
         .map(|file| {
@@ -150,7 +91,8 @@ fn write_index(files: Vec<String>, output_dir: &str) -> Result<(), anyhow::Error
         .collect::<Vec<String>>()
         .join("<br />\n");
 
-    html.push_str(templates::render_body(&body).as_str());
+    index_object.html_content = body;
+    html.push_str(templates::render_body(&index_object).as_str());
     html.push_str(templates::FOOTER);
 
     let index_path = Path::new(&output_dir).join("index.html");
