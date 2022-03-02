@@ -211,7 +211,7 @@ pub fn render_body(markdown: &Markdown) -> String {
             <h2>{}</h2>
             <h5 id={}><em>{}</em></h5>
             <img src="{}" alt="{}">
-            <p>{}</p>
+            {}
 		</main>
         "#,
         markdown.title,
