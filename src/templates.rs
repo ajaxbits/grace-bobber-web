@@ -1,9 +1,4 @@
-use chrono::{NaiveDate, TimeZone};
-use scraper::{Html, Selector};
-use serde::Deserialize;
-use std::{convert::Infallible, fs, net::SocketAddr, path::Path, thread, time::Duration};
-
-use crate::CONTENT_DIR;
+use std::{fs, path::Path};
 
 #[derive(Debug)]
 pub struct Markdown {
@@ -36,7 +31,7 @@ impl Markdown {
                 let date_string = headers.as_ref().unwrap()["date"].as_string().unwrap();
                 chrono::NaiveDate::parse_from_str(&date_string, "%Y-%m-%d").unwrap()
             },
-            image: markdown_file_path.to_owned(),
+            image: headers.as_ref().unwrap()["image"].as_string().unwrap(),
             markdown_content,
             html_content,
         }
@@ -213,13 +208,15 @@ pub fn render_body(markdown: &Markdown) -> String {
         r#"  <main class="content">
             <h2>{}</h2>
             <h5 id={}><em>{}</em></h5>
-            <img src="../dist/images/hundred-days.jpg" alt="Hundred Days image">
+            <img src="{}" alt="{}">
             <p>{}</p>
 		</main>
         "#,
         markdown.title,
         markdown.date.to_string(),
         markdown.date.format("%B %e, %Y"),
+        markdown.image,
+        markdown.image,
         markdown.html_content
     )
 }

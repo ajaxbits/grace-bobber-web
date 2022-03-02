@@ -1,4 +1,4 @@
-use std::{convert::Infallible, fs, net::SocketAddr, path::Path, thread, time::Duration};
+use std::{fs, path::Path};
 
 mod templates; // how we call in our templates
 use templates::Markdown;
