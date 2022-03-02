@@ -18,13 +18,16 @@ async fn main() -> Result<(), anyhow::Error> {
 fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error> {
     let _ = fs::remove_dir_all(output_dir);
 
-    let markdown_files: Vec<Markdown> = walkdir::WalkDir::new(content_dir)
+    let mut markdown_files: Vec<Markdown> = walkdir::WalkDir::new(content_dir)
         .into_iter()
         .filter_map(|e| e.ok())
         .filter(|e| e.path().display().to_string().ends_with(".md"))
         .map(|e| e.path().display().to_string())
         .map(|e| Markdown::new(&e))
         .collect();
+
+    markdown_files.sort_by_key(|e| e.date);
+    markdown_files.reverse();
 
     let mut html_files = Vec::with_capacity(markdown_files.len());
 
@@ -82,14 +85,18 @@ fn write_index(files: Vec<Markdown>, output_dir: &str) -> Result<(), anyhow::Err
         markdown_content: "".to_owned(),
         html_content: "".to_owned(),
     };
-    let mut html = templates::render_header(&index_object);
-    let body: String = files
+    let mut sorted_files = files.clone();
+    sorted_files.sort_by_key(|e| e.date);
+    sorted_files.reverse();
+    let body: String = sorted_files
         .into_iter()
         .map(|file| generate_index_card(file))
         .collect::<Vec<String>>()
         .join("\n");
 
     index_object.html_content = body;
+
+    let mut html = templates::render_header(&index_object);
     html.push_str(index_template::render_index_body(index_object).as_str());
     html.push_str(templates::FOOTER);
 

@@ -1,6 +1,6 @@
 use std::fs;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Markdown {
     pub file_name: String,
     pub title: String,
@@ -24,8 +24,6 @@ impl Markdown {
         let mut html_content = String::new();
         pulldown_cmark::html::push_html(&mut html_content, parser);
 
-        eprintln!("currently processing {}", markdown_file_path);
-        eprintln!("currently headers {:?}", headers);
         Self {
             file_name: markdown_file_path.to_owned(),
             title: headers.as_ref().unwrap()["title"].as_string().unwrap(),
@@ -272,7 +270,7 @@ pub fn render_bottom_navigation(
                         .trim_start_matches(content_dir)
                         .replace(".md", ".html"),
                     next_article.title,
-                    next_article.date.to_string()
+                    next_article.date.format("%B %e, %Y")
                 )
             }
             None => r#"
@@ -315,7 +313,7 @@ pub fn render_bottom_navigation(
                         .trim_start_matches(content_dir)
                         .replace(".md", ".html"),
                     previous_article.title,
-                    previous_article.date.to_string()
+                    previous_article.date.format("%B %e, %Y")
                 )
             }
             None => r#"
