@@ -1,4 +1,4 @@
-use std::{fs, path::Path};
+use std::fs;
 
 #[derive(Debug)]
 pub struct Markdown {

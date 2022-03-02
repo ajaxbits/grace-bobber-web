@@ -1,6 +1,9 @@
 use std::{fs, path::Path};
 
-mod templates; // how we call in our templates
+mod index_template;
+mod templates;
+use index_template::generate_index_card;
+// how we call in our templates // how we call in our templates
 use templates::Markdown;
 
 const CONTENT_DIR: &str = "news_content"; // relative to the root cargo directory
@@ -65,11 +68,11 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
         }
     }
 
-    write_index(html_files, output_dir)?;
+    write_index(markdown_files, output_dir)?;
     Ok(())
 }
 
-fn write_index(files: Vec<String>, output_dir: &str) -> Result<(), anyhow::Error> {
+fn write_index(files: Vec<Markdown>, output_dir: &str) -> Result<(), anyhow::Error> {
     // TODO make cleaner
     let mut index_object = Markdown {
         file_name: "".to_owned(),
@@ -80,19 +83,14 @@ fn write_index(files: Vec<String>, output_dir: &str) -> Result<(), anyhow::Error
         html_content: "".to_owned(),
     };
     let mut html = templates::render_header(&index_object);
-    let body = files
+    let body: String = files
         .into_iter()
-        .map(|file| {
-            let file = format!("/news{}", file.trim_start_matches(output_dir));
-            // TODO fix this
-            let title = file.trim_start_matches("/").trim_end_matches(".html");
-            format!(r#"<a href="{}">{}</a>"#, file, title)
-        })
+        .map(|file| generate_index_card(file))
         .collect::<Vec<String>>()
         .join("<br />\n");
 
     index_object.html_content = body;
-    html.push_str(templates::render_body(&index_object).as_str());
+    html.push_str(index_template::render_index_body(index_object).as_str());
     html.push_str(templates::FOOTER);
 
     let index_path = Path::new(&output_dir).join("index.html");
