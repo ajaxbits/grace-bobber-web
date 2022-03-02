@@ -21,6 +21,7 @@ pub fn generate_index_card(article: Markdown) -> String {
 							class="card-image"
 							src="{}"
 							alt="{}"
+                            id="{}"
 						/>
 						<p class="card-date small-caps">{}</p>
 						<h4 class="card-subtitle">{}</h4>
@@ -33,7 +34,12 @@ pub fn generate_index_card(article: Markdown) -> String {
             .trim_start_matches("/")
             .replace(".md", ".html"),
         article.image,
-        article.image,
+        article
+            .image
+            .trim_start_matches("/"),
+        article
+            .image
+            .trim_start_matches("/"),
         article.date.format("%B %e, %Y"),
         article.title
     )

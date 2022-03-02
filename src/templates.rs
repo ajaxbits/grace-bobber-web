@@ -24,6 +24,8 @@ impl Markdown {
         let mut html_content = String::new();
         pulldown_cmark::html::push_html(&mut html_content, parser);
 
+        eprintln!("currently processing {}", markdown_file_path);
+        eprintln!("currently headers {:?}", headers);
         Self {
             file_name: markdown_file_path.to_owned(),
             title: headers.as_ref().unwrap()["title"].as_string().unwrap(),
