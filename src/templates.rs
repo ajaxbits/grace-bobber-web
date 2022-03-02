@@ -41,7 +41,6 @@ impl Markdown {
 pub fn render_header(markdown: &Markdown) -> String {
     format!(
         r#"<!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -63,7 +62,7 @@ pub fn render_header(markdown: &Markdown) -> String {
 			property="og:description"
 			content="Grace Bobber is an actor, musician, and dancer living in Chicago. She graduated from Northwestern University and is represented by Shirley Hamilton Talent."
 		/>
-		<meta property="og:image" content="/images/headshot.jpg" />
+		<meta property="og:image" content="../images/headshot.jpg" />
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
@@ -73,23 +72,26 @@ pub fn render_header(markdown: &Markdown) -> String {
 			property="twitter:description"
 			content="Grace Bobber is an actor, musician, and dancer living in Chicago. She graduated from Northwestern University and is represented by Shirley Hamilton Talent."
 		/>
-		<meta property="twitter:image" content="/images/headshot.jpg" />
+		<meta property="twitter:image" content="../images/headshot.jpg" />
 		<link
 			rel="shortcut icon"
 			href="/images/sunflower.png"
 			type="image/x-icon"
 		/>
 
-		<link rel="preload" href="/dist/styles/base.css" as="style" />
-		<link rel="preload" href="/dist/styles/global.css" as="style" />
-		<link rel="preload" href="/dist/styles/news.css" as="style" />
+		<link rel="preload" href="../dist/styles/base.css" as="style" />
+		<link rel="preload" href="../dist/styles/global.css" as="style" />
+		<link rel="preload" href="../dist/styles/news.css" as="style" />
 
 		<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
 		<link
-		<link rel="stylesheet" href="/dist/styles/base.css" />
-		<link rel="stylesheet" href="/dist/styles/global.css" />
-		<link rel="stylesheet" href="/dist/styles/news.css" />
-		<link rel="preload" href="/dist/scripts/menu.js" as="script" />
+			href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Work+Sans:ital,wght@0,400;0,450;1,400;1,450&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="../dist/styles/base.css" />
+		<link rel="stylesheet" href="../dist/styles/global.css" />
+		<link rel="stylesheet" href="../dist/styles/news.css" />
+		<link rel="preload" href="../dist/scripts/menu.js" as="script" />
 	</head>
 	<body>
 		<section class="contentWrapper">
@@ -373,7 +375,7 @@ pub const FOOTER: &str = r#"
 					/></svg
 			></a>
 		</footer>
-		<script src="/dist/scripts/menu.js"></script>
+		<script src="../dist/scripts/menu.js"></script>
 	</body>
 </html>
 "#;

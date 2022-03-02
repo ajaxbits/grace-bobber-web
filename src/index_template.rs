@@ -14,7 +14,6 @@ pub fn render_index_body(index_object: Markdown) -> String {
 }
 
 pub fn generate_index_card(article: Markdown) -> String {
-    eprintln!("{:?}", article);
     format!(
         r#"
 					<a href="{}" class="card">

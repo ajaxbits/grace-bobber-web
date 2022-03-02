@@ -87,7 +87,7 @@ fn write_index(files: Vec<Markdown>, output_dir: &str) -> Result<(), anyhow::Err
         .into_iter()
         .map(|file| generate_index_card(file))
         .collect::<Vec<String>>()
-        .join("<br />\n");
+        .join("\n");
 
     index_object.html_content = body;
     html.push_str(index_template::render_index_body(index_object).as_str());
