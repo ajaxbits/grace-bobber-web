@@ -1,4 +1,4 @@
-use std::fs;
+use std::{fs, path::Path};
 
 #[derive(Debug, Clone)]
 pub struct Markdown {
@@ -210,7 +210,7 @@ pub fn render_body(markdown: &Markdown) -> String {
         r#"  <main class="content">
             <h2>{}</h2>
             <h5 id={}><em>{}</em></h5>
-            <img src="{}" alt="{}">
+            <img src="{}" alt="{}" id="{}-in-article">
             {}
 		</main>
         "#,
@@ -219,6 +219,10 @@ pub fn render_body(markdown: &Markdown) -> String {
         markdown.date.format("%B %e, %Y"),
         markdown.image,
         markdown.image,
+        Path::new(&markdown.image)
+            .file_stem()
+            .unwrap()
+            .to_string_lossy(),
         markdown.html_content
     )
 }

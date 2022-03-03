@@ -1,3 +1,5 @@
+use std::path::Path;
+
 use crate::{templates::Markdown, CONTENT_DIR};
 
 pub fn render_index_body(index_object: Markdown) -> String {
@@ -34,12 +36,14 @@ pub fn generate_index_card(article: Markdown) -> String {
             .trim_start_matches("/")
             .replace(".md", ".html"),
         article.image,
-        article
-            .image
-            .trim_start_matches("/"),
-        article
-            .image
-            .trim_start_matches("/"),
+        Path::new(&article.image)
+            .file_stem()
+            .unwrap()
+            .to_string_lossy(),
+        Path::new(&article.image)
+            .file_stem()
+            .unwrap()
+            .to_string_lossy(),
         article.date.format("%B %e, %Y"),
         article.title
     )
