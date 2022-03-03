@@ -4,7 +4,16 @@
     object-fit: cover;
     width: 100%;
 }
-
+#Julius-Caesar {
+    object-position: 20% 25%;
+}
+#ABCD-Cover-1200x630 {
+    object-position: left;
+}
+#sharley,
+#knuffle-art {
+    object-fit: contain;
+}
 
 
 
