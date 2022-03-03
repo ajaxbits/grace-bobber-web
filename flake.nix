@@ -47,40 +47,52 @@
             -e ./nix/node-env.nix
         '';
 
+        images_folder = "images";
+        dist_images_folder = "dist/images";
+        thumbnails_folder = "thumbnails";
+
+        optimizejpg = pkgs.writeShellScriptBin "optimizejpg" ''
+          for img in $(${pkgs.fd}/bin/fd -e jpg -e jpeg . ${images_folder});
+          do
+                  ${pkgs.jpegoptim}/bin/jpegoptim --dest="${dist_images_folder}" \
+                          --overwrite \
+                          --all-progressive \
+                          --strip-all \
+                          --max=90 \
+                          --force \
+                          $img
+                  ${pkgs.jpegoptim}/bin/jpegoptim --dest=${thumbnails_folder} \
+                          --overwrite \
+                          --all-progressive \
+                          --strip-all \
+                          --size=10% \
+                          --force \
+                          $img
+          done
+        '';
+
+        optimizepng = pkgs.writeShellScriptBin "optimizepng" ''
+          for img in $( ${pkgs.fd}/bin/fd -e png . ${images_folder} );
+          do
+                  ${pkgs.optipng}/bin/optipng $img -dir ${dist_images_folder} -clobber
+                  ${pkgs.optipng}/bin/optipng $img -dir ${thumbnails_folder} -o 7 -clobber
+          done
+        '';
+
 
       in
       rec {
-        packages = {
-          ociImage = pkgs.dockerTools.buildLayeredImage {
-            name = "gracebobber.com";
-            contents = [ pkgs.python3Minimal htmlSource ];
-            tag = revision;
-            config = {
-              Cmd = [
-                "${pkgs.python3Minimal}/bin/python"
-                "-m"
-                "http.server"
-                "8000"
-                "--directory"
-                "${htmlSource}"
-              ];
-            };
-          };
-        };
-
         devShell = pkgs.mkShell {
           buildInputs = with pkgs;
             with nodePackages; [
               nodejs
               node2nix
               nodeEnv.shell.nodeDependencies
-              imagemagick
-              libwebp
-              jpegoptim
-              optipng
-              svgo
               fd
               exiftool
+
+              optimizepng
+              optimizejpg
 
               rust-bin.stable."1.58.0".default
               openssl
