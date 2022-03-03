@@ -1,3 +1,4 @@
+use serde::Deserialize;
 use std::{fs, path::Path};
 
 #[derive(Debug, Clone)]
@@ -10,30 +11,50 @@ pub struct Markdown {
     pub html_content: String,
 }
 
+#[derive(Debug, Clone, Deserialize)]
+struct FrontMatter {
+    title: String,
+    date: chrono::NaiveDate,
+    image: String,
+}
+#[derive(Debug)]
+pub enum MarkdownParseError {
+    TitleError,
+    DateError,
+    EmageError,
+    FrontMatterError,
+    GenericParseError,
+}
+
 impl Markdown {
-    pub fn new(markdown_file_path: &String) -> Self {
+    pub fn new(markdown_file_path: &String) -> Result<Self, MarkdownParseError> {
         let markdown: String = fs::read_to_string(&markdown_file_path).unwrap();
         let matter = gray_matter::Matter::<gray_matter::engine::YAML>::new();
 
-        let markdown = matter.parse(&markdown);
-        let headers: Option<gray_matter::Pod> = markdown.data;
-        let markdown_content = markdown.content;
+        let markdown = matter.parse_with_struct::<FrontMatter>(&markdown);
 
-        let parser =
-            pulldown_cmark::Parser::new_ext(&markdown_content, pulldown_cmark::Options::all());
-        let mut html_content = String::new();
-        pulldown_cmark::html::push_html(&mut html_content, parser);
+        match markdown {
+            Some(markdown) => {
+                let headers: FrontMatter = markdown.data;
+                let markdown_content = markdown.content;
 
-        Self {
-            file_name: markdown_file_path.to_owned(),
-            title: headers.as_ref().unwrap()["title"].as_string().unwrap(),
-            date: {
-                let date_string = headers.as_ref().unwrap()["date"].as_string().unwrap();
-                chrono::NaiveDate::parse_from_str(&date_string, "%Y-%m-%d").unwrap()
-            },
-            image: headers.as_ref().unwrap()["image"].as_string().unwrap(),
-            markdown_content,
-            html_content,
+                let parser = pulldown_cmark::Parser::new_ext(
+                    &markdown_content,
+                    pulldown_cmark::Options::all(),
+                );
+                let mut html_content = String::new();
+                pulldown_cmark::html::push_html(&mut html_content, parser);
+
+                Ok(Self {
+                    file_name: markdown_file_path.to_owned(),
+                    title: headers.title,
+                    date: headers.date,
+                    image: headers.image,
+                    markdown_content,
+                    html_content,
+                })
+            }
+            None => Err(MarkdownParseError::GenericParseError),
         }
     }
 }
