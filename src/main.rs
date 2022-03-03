@@ -28,6 +28,8 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
 
     markdown_files.sort_by_key(|e| e.date);
     markdown_files.reverse();
+    markdown_files.retain(|x| x.file_name != format!("{}/_index.md", CONTENT_DIR));
+    eprintln!("{:?}", markdown_files);
 
     let mut html_files = Vec::with_capacity(markdown_files.len());
 
@@ -59,13 +61,20 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
                     .file_name
                     .replace(content_dir, output_dir)
                     .replace(".md", ".html");
-                // set folder == public folder
-                let folder = Path::new(&html_file).parent().unwrap();
-                let _ = fs::create_dir_all(folder);
-                fs::write(&html_file, html)?;
-                html_files.push(html_file);
 
-                next_article = Some(current_file);
+                let folder = Path::new(&html_file).parent();
+                match folder {
+                    Some(parent_folder) => {
+                        let _ = fs::create_dir_all(parent_folder);
+                        fs::write(&html_file, html)?;
+                        html_files.push(html_file);
+
+                        next_article = Some(current_file);
+                    }
+                    None => {
+                        eprintln!("No public folder found. Are you in the right directory? Right now, the public directory is set to: {}", output_dir);
+                    }
+                }
             }
             _ => break,
         }
@@ -76,19 +85,8 @@ fn rebuild_site(content_dir: &str, output_dir: &str) -> Result<(), anyhow::Error
 }
 
 fn write_index(files: Vec<Markdown>, output_dir: &str) -> Result<(), anyhow::Error> {
-    // TODO make cleaner
-    let mut index_object = Markdown {
-        file_name: "".to_owned(),
-        title: "News".to_owned(),
-        date: chrono::NaiveDate::from_ymd(2000, 1, 1),
-        image: "".to_owned(),
-        markdown_content: "".to_owned(),
-        html_content: "".to_owned(),
-    };
-    let mut sorted_files = files.clone();
-    sorted_files.sort_by_key(|e| e.date);
-    sorted_files.reverse();
-    let body: String = sorted_files
+    let mut index_object = Markdown::new(&format!("{}/_index.md", CONTENT_DIR));
+    let body: String = files
         .into_iter()
         .map(|file| generate_index_card(file))
         .collect::<Vec<String>>()
