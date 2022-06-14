@@ -106,6 +106,9 @@ p {
     rgba(249, 250, 254, 1) 100%
   );
 }
+#Jersey-Boys-poster{
+    object-position: 0% 35%;
+}
 #Jersey-Boys-poster-in-article {
     height: 40vh;
 }
