@@ -106,6 +106,9 @@ p {
     rgba(249, 250, 254, 1) 100%
   );
 }
+#Jersey-Boys-poster-in-article {
+    height: 40vh;
+}
 @media (min-width: 800px) {
   #death {
     object-position: 0% 16%;
