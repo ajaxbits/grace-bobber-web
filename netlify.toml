@@ -13,4 +13,3 @@ package="netlify-plugin-subfont"
 package="netlify-plugin-checklinks"
   [plugins.inputs]
   skipPatterns = ["preconnect-check"]
-  checkExternal = true
