@@ -1,5 +1,5 @@
 // sticky, but not annoying nav using headroom.js
-import Headroom from "headroom.js";
+import Headroom from "./headroom.js";
 const siteNav = document.querySelector(`nav`) as HTMLElement;
 const videoWrapper = document.querySelector(`.videoWrapper`) as HTMLElement;
 let options;
