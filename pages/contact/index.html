@@ -175,10 +175,10 @@
 				</article>
 
 				<form
-					action="https://api.staticforms.xyz/submit"
-					method="post"
 					class="normform contactForm"
 					id="contact-form"
+                    name="contact"
+                    netlify
 				>
 					<fieldset>
 						<legend>Drop me a line!</legend>
@@ -237,7 +237,7 @@
 					<input type="text" name="honeypot" style="display: none;" />
 					<div class="inline-buttons">
 						<input type="reset" value="Reset" />
-						<input type="submit" value="Send" class="sendButton" />
+						<input onclick="window.location.href = '/pages/contact/success.html';" type="submit" value="Send" class="sendButton" />
 					</div>
 				</form>
 			</main>
