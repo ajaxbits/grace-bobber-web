@@ -178,16 +178,14 @@
 					class="normform contactForm"
 					id="contact-form"
                     name="contact"
-                    netlify
+                    method="POST"
+                    action="/pages/contact/success.html"
+                    netlify-honeypot="honeypot"
+                    data-netlify-recaptcha="true"
+                    data-netlify="true"
 				>
 					<fieldset>
 						<legend>Drop me a line!</legend>
-
-						<input
-							type="hidden"
-							name="accessKey"
-							value="0ea20876-5bf6-413c-ad01-e6f3e5aded7b"
-						/>
 						<label for="text-input">Name</label>
 						<input
 							name="name"
@@ -227,17 +225,12 @@
 							required
 						></textarea>
 					</fieldset>
-					<input type="hidden" name="replyTo" value="@" />
-					<input
-						type="hidden"
-						name="redirectTo"
-						value="https://www.gracebobber.com/pages/contact/success.html"
-					/>
 					<!--Spam Protection-->
 					<input type="text" name="honeypot" style="display: none;" />
+                    <div data-netlify-recaptcha="true"></div>
 					<div class="inline-buttons">
 						<input type="reset" value="Reset" />
-						<input onclick="window.location.href = '/pages/contact/success.html';" type="submit" value="Send" class="sendButton" />
+						<input type="submit" value="Send" class="sendButton" />
 					</div>
 				</form>
 			</main>
