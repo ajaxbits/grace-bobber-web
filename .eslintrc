@@ -1,4 +1,0 @@
-{
-  "extends": ["wesbos"],
-  "rules": { "quotes": [2, "backtick"] }
-}

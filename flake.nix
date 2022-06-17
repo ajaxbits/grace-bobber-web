@@ -90,6 +90,7 @@
               nodeEnv.shell.nodeDependencies
               fd
               exiftool
+              nodePackages.prettier
 
               optimizepng
               optimizejpg
