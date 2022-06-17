@@ -20,7 +20,6 @@
           inherit system overlays;
         };
 
-        nodeEnv = pkgs.callPackage ./nix { };
         revision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}";
         inherit (gitignore.lib) gitignoreSource;
 
@@ -37,15 +36,6 @@
             cp -r ./* $out/
           '';
         };
-
-        node2nix = with pkgs; writeShellScriptBin "node2nix" ''
-          ${nodePackages.node2nix}/bin/node2nix \
-            --development \
-            -l package-lock.json \
-            -c ./nix/default.nix \
-            -o ./nix/node-packages.nix \
-            -e ./nix/node-env.nix
-        '';
 
         images_folder = "images";
         dist_images_folder = "dist/images";
@@ -86,11 +76,10 @@
           buildInputs = with pkgs;
             with nodePackages; [
               nodejs
-              node2nix
-              nodeEnv.shell.nodeDependencies
               fd
               exiftool
               nodePackages.prettier
+              netlify-cli
 
               optimizepng
               optimizejpg
@@ -101,9 +90,6 @@
               cargo-edit
               cargo-watch
             ];
-          shellHook = ''
-            export NODE_PATH=${nodeEnv.shell.nodeDependencies}/lib/node_modules
-          '';
         };
       });
 }
