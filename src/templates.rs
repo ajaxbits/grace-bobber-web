@@ -122,7 +122,7 @@ pub fn render_header(markdown: &Markdown) -> String {
 				</a>
 				<ul class="menuList">
 					<li>
-						<a class="menuList-link" href="/#bio">Bio</a>
+						<a class="menuList-link" href="/#bio">Home</a>
 					</li>
 					<li>
 						<a class="menuList-link" href="/pages/news">News</a>
@@ -174,7 +174,7 @@ pub fn render_header(markdown: &Markdown) -> String {
 				>
 					<ul class="swipeOver-linkList">
 						<li>
-							<a class="swipeOver-link" href="/#bio">Bio</a>
+							<a class="swipeOver-link" href="/#bio">Home</a>
 						</li>
 						<li>
 							<a class="swipeOver-link" href="/pages/news">News</a>
