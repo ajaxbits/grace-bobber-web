@@ -8,8 +8,3 @@ package="netlify-plugin-subfont"
   [plugins.inputs]
   inlineCss = true
   inlineFonts = true
-
-[[plugins]]
-package="netlify-plugin-checklinks"
-  [plugins.inputs]
-  skipPatterns = ["preconnect-check"]
