@@ -1,5 +1,5 @@
 ---
-title: "'Hundred Days' @ Kokandy"
+title: '"Hundred Days" @ Kokandy'
 date: "2021-09-22"
 image: ../dist/images/hundred-days.jpg
 ---

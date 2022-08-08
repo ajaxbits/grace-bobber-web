@@ -1,5 +1,5 @@
 ---
-title: "Julius Caesar @ Evergreen Theatre Collective"
+title: '"Julius Caesar" @ Evergreen Theatre Collective'
 date: 2020-09-13
 image: ../dist/images/Julius-Caesar.jpg
 ---

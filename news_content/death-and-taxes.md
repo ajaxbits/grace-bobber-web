@@ -1,5 +1,5 @@
 ---
-title: "Death & Taxes @ HARP Theatricals"
+title: '"Death & Taxes" @ HARP Theatricals'
 date: 2020-12-07
 image: ../dist/images/death-and-taxes.jpg
 ---

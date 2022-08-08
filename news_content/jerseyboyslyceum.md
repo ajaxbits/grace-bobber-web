@@ -1,5 +1,5 @@
 ---
-title: "Jersey Boys @ The Lyceum"
+title: '"Jersey Boys" @ The Lyceum'
 date: "2022-06-14"
 image: "../dist/images/Jersey-Boys-poster.png"
 ---
