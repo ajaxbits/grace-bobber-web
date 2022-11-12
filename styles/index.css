@@ -46,6 +46,12 @@
   z-index: -1;
 }
 
+video {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg); /* Safari and Chrome */
+  -moz-transform: rotateY(180deg); /* Firefox */
+}
+
 /* MUTE BUTTON */
 
 @keyframes shadow-pulse {
@@ -115,8 +121,6 @@
 .videoWrapper {
   display: grid;
   grid-template-columns: 1fr 1.6fr;
-  /* height: 100%; */
-  /* width: 100%; */
 }
 
 .heroWrapper-textBlock {
