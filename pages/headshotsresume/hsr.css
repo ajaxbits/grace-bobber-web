@@ -56,7 +56,7 @@ hr {
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: none;
   background-color: rgba(0, 0, 0, 0.9);
 }
 
@@ -113,6 +113,10 @@ hr {
   transform: scale(1.05);
 }
 
+.mobile {
+  display: none;
+}
+
 /* @media all and (max-width: 750px) { */
 /*   .hero { */
 /*     display: flex; */
@@ -124,8 +128,14 @@ hr {
 /* } */
 
 @media only screen and (max-width: 700px) {
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: unset;
+  }
   .topButton {
-      margin-top: 100vh;
+    margin-top: 100vh;
   }
 
   .modal-content,
