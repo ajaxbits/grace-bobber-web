@@ -18,6 +18,3 @@ const handleClick = (e) => {
 };
 
 muteButton.addEventListener(`click`, handleClick);
-
-// trying to get the video slideover
-video.readyState === 4 ? console.log(`buffered`) : console.log(`not ready`)
