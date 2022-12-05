@@ -1,5 +1,5 @@
 ---
-title: '"The Sound of Music" @ The Marriott'
+title: '"The Sound of Music" at The Marriott'
 date: "2022-05-03"
 image: "../dist/images/sound-of-music.png"
 ---

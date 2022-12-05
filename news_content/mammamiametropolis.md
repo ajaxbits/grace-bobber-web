@@ -1,5 +1,5 @@
 ---
-title: '"Mamma Mia!" @ Metropolis'
+title: '"Mamma Mia!" at Metropolis'
 date: 2020-05-24
 image: ../dist/images/MammaMia.jpg
 ---

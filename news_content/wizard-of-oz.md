@@ -1,5 +1,5 @@
 ---
-title: '"The Wizard of Oz" @ The Marriott'
+title: '"The Wizard of Oz" at The Marriott'
 date: "2022-06-21"
 image: "../dist/images/wizard-of-oz.jpg"
 ---

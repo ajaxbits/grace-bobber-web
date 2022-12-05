@@ -1,5 +1,5 @@
 ---
-title: '"Knuffle Bunny" @ The Greenhouse'
+title: '"Knuffle Bunny" at The Greenhouse'
 date: 2020-03-05
 image: ../dist/images/knuffle-art.jpg
 ---
