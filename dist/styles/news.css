@@ -1,21 +1,22 @@
+#itw-poster {
+  object-position: 0% 20%;
+}
 #jan_album_art-in-article {
-    max-height: 300px;
-    height: auto;
-    object-fit: cover;
-    width: 100%;
+  max-height: 300px;
+  height: auto;
+  object-fit: cover;
+  width: 100%;
 }
 #Julius-Caesar {
-    object-position: 20% 25%;
+  object-position: 20% 25%;
 }
 #ABCD-Cover-1200x630 {
-    object-position: left;
+  object-position: left;
 }
 #sharley,
 #knuffle-art {
-    object-fit: contain;
+  object-fit: contain;
 }
-
-
 
 img {
   align-self: center;
@@ -100,17 +101,13 @@ p {
 }
 #ABCD {
   background: rgb(217, 229, 249);
-  background: linear-gradient(
-    180deg,
-    rgba(217, 229, 249, 1) 71%,
-    rgba(249, 250, 254, 1) 100%
-  );
+  background: linear-gradient(180deg, rgba(217, 229, 249, 1) 71%, rgba(249, 250, 254, 1) 100%);
 }
-#Jersey-Boys-poster{
-    object-position: 0% 35%;
+#Jersey-Boys-poster {
+  object-position: 0% 35%;
 }
 #Jersey-Boys-poster-in-article {
-    height: 40vh;
+  height: 40vh;
 }
 @media (min-width: 800px) {
   #death {
