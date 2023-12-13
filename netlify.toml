@@ -1,4 +1,12 @@
-# A basic redirect rule
+[context.production]
+  publish = "website/"
+
+[context.deploy-preview]
+  publish = "website/"
+
+[context.branch-deploy]
+  publish = "website/"
+
 [[redirects]]
   from = "/pages/news"
   to = "/news"
