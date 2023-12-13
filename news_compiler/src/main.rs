@@ -6,8 +6,8 @@ use index_template::generate_index_card;
 // how we call in our templates // how we call in our templates
 use templates::{Markdown, MarkdownParseError};
 
-const CONTENT_DIR: &str = "news_content"; // relative to the root cargo directory
-const PUBLIC_DIR: &str = "news";
+const CONTENT_DIR: &str = "./news_content"; // relative to the root cargo directory
+const PUBLIC_DIR: &str = "../website/news";
 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
