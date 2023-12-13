@@ -4,7 +4,6 @@
     cloudflare:
       auto-ttl: true
       proxied: false
-  ttl: 300
   type: ALIAS
   value: apex-loadbalancer.netlify.com.
 
@@ -13,7 +12,6 @@ analytics:
     cloudflare:
       auto-ttl: true
       proxied: false
-  ttl: 300
   type: CNAME
   value: grace-bobber-analytics-frontend.fly.dev.
 links:
@@ -21,6 +19,5 @@ links:
     cloudflare:
       auto-ttl: true
       proxied: false
-  ttl: 300
   type: CNAME
   value: stirring-sprinkles-16b7be.netlify.app.
