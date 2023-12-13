@@ -6,3 +6,10 @@ analytics:
   ttl: 300
   type: CNAME
   value: grace-bobber-analytics-frontend.fly.dev.
+links:
+  octodns:
+    cloudflare:
+      proxied: false
+  ttl: 300
+  type: CNAME
+  value: stirring-sprinkles-16b7be.netlify.app.
