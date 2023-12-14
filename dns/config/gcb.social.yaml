@@ -1,8 +1,1 @@
 ---
-analytics:
-  octodns:
-    cloudflare:
-      proxied: false
-  ttl: 300
-  type: CNAME
-  value: grace-bobber-analytics-frontend.fly.dev.
