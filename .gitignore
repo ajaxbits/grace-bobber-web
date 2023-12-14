@@ -31,3 +31,4 @@ Cargo.lock
 # Local Netlify folder
 .netlify
 dns/env
+.DS_Store
