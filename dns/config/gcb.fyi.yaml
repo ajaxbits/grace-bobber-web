@@ -8,6 +8,16 @@
   type: ALIAS
   value: apex-loadbalancer.netlify.com.
 
+_acme-challenge.analytics:
+  octodns:
+    cloudflare:
+      auto-ttl: true
+      proxied: false
+  ttl: 300
+  type: CNAME
+  value: analytics.gcb.fyi.2x6ez0.flydns.net.
+
+
 analytics:
   octodns:
     cloudflare:
@@ -16,6 +26,7 @@ analytics:
   ttl: 300
   type: CNAME
   value: grace-bobber-analytics-frontend.fly.dev.
+
 links:
   octodns:
     cloudflare:
