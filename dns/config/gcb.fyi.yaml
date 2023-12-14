@@ -17,15 +17,21 @@ _acme-challenge.analytics:
   type: CNAME
   value: analytics.gcb.fyi.2x6ez0.flydns.net.
 
-
 analytics:
-  octodns:
-    cloudflare:
-      auto-ttl: true
-      proxied: false
-  ttl: 300
-  type: CNAME
-  value: grace-bobber-analytics-frontend.fly.dev.
+  - octodns:
+      cloudflare:
+        auto-ttl: true
+        proxied: false
+    ttl: 300
+    type: A
+    value: 66.241.124.209
+  - octodns:
+      cloudflare:
+        auto-ttl: true
+        proxied: false
+    ttl: 300
+    type: AAAA
+    value: 2a09:8280:1::5b:c29f
 
 links:
   octodns:
