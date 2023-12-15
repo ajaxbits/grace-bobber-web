@@ -24,6 +24,12 @@ providers:
     #records_per_page: 100
 
 zones:
+  bobber.fyi.:
+    sources:
+      - config
+    targets:
+      - cloudflare
+
   gcb.social.:
     sources:
       - config
