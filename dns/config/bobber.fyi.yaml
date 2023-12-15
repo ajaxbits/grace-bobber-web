@@ -11,7 +11,7 @@
 _acme-challenge.analytics:
   octodns:
     cloudflare:
-      proxied: true
+      proxied: false
   ttl: 300
   type: CNAME
   value: analytics.bobber.fyi.2x6ez0.flydns.net.
@@ -19,7 +19,7 @@ _acme-challenge.analytics:
 analytics:
   octodns:
     cloudflare:
-      proxied: true
+      proxied: false
   ttl: 300
   type: CNAME
   value: grace-bobber-analytics-frontend.fly.dev.
