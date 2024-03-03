@@ -1,321 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-		<!-- Primary Meta Tags -->
-		<title>Grace Bobber</title>
-		<meta name="title" content="Grace Bobber" />
-		<meta
-			name="description"
-			content="Grace Bobber is an actor, musician, and dancer living in Chicago. She graduated from Northwestern University and is represented by Shirley Hamilton Talent."
-		/>
 
-		<!-- Open Graph / Facebook -->
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://www.gracebobber.com/" />
-		<meta property="og:title" content="Grace Bobber" />
-		<meta
-			property="og:description"
-			content="Grace Bobber is an actor, musician, and dancer living in Chicago. She graduated from Northwestern University and is represented by Shirley Hamilton Talent."
-		/>
-		<meta property="og:image" content="/images/headshot.jpg" />
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+	<!-- Primary Meta Tags -->
+	<title>Grace Bobber</title>
+	<meta name="title" content="Grace Bobber" />
+	<meta name="description"
+		content="Grace Bobber is an actor, musician, and dancer living in Chicago. She graduated from Northwestern University and is represented by Shirley Hamilton Talent." />
 
-		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content="https://www.gracebobber.com/" />
-		<meta property="twitter:title" content="Grace Bobber" />
-		<meta
-			property="twitter:description"
-			content="Grace Bobber is an actor, musician, and dancer living in Chicago. She graduated from Northwestern University and is represented by Shirley Hamilton Talent."
-		/>
-		<meta property="twitter:image" content="/images/headshot.jpg" />
-		<link rel="shortcut icon" href="/images/sunflower.png" type="image/x-icon" />
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://www.gracebobber.com/" />
+	<meta property="og:title" content="Grace Bobber" />
+	<meta property="og:description"
+		content="Grace Bobber is an actor, musician, and dancer living in Chicago. She graduated from Northwestern University and is represented by Shirley Hamilton Talent." />
+	<meta property="og:image" content="/images/headshot.jpg" />
 
-		<link rel="preload" href="/dist/styles/base.css" as="style" />
-		<link rel="preload" href="/dist/styles/global.css" as="style" />
-		<link rel="preload" href="styles/index.css" as="style" />
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:url" content="https://www.gracebobber.com/" />
+	<meta property="twitter:title" content="Grace Bobber" />
+	<meta property="twitter:description"
+		content="Grace Bobber is an actor, musician, and dancer living in Chicago. She graduated from Northwestern University and is represented by Shirley Hamilton Talent." />
+	<meta property="twitter:image" content="/images/headshot.jpg" />
+	<link rel="shortcut icon" href="/images/sunflower.png" type="image/x-icon" />
 
-		<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-		<link
-			href="https://fonts.bunny.net/css2?family=Baskervville:ital@0;1&family=Work+Sans:ital,wght@0,400;0,450;1,400;1,450&display=swap"
-			rel="stylesheet"
-		/>
-		<link rel="stylesheet" href="/dist/styles/base.css" />
-		<link rel="stylesheet" href="/dist/styles/global.css" />
-		<link rel="stylesheet" href="styles/index.css" />
+	<link rel="preload" href="/dist/styles/base.css" as="style" />
+	<link rel="preload" href="/dist/styles/global.css" as="style" />
+	<link rel="preload" href="styles/index.css" as="style" />
 
-		<link rel="preload" href="/dist/scripts/menu.js" as="script" />
-		<link rel="preload" href="/dist/scripts/mute.js" as="script" />
-		<script
-			async
-			src="https://analytics.bobber.fyi/script.js"
-			data-website-id="e1e07a18-6a34-4c63-b80b-957af2784353"
-			data-do-not-track="true"
-		></script>
-	</head>
+	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+	<link
+		href="https://fonts.bunny.net/css2?family=Baskervville:ital@0;1&family=Work+Sans:ital,wght@0,400;0,450;1,400;1,450&display=swap"
+		rel="stylesheet" />
+	<link rel="stylesheet" href="/dist/styles/base.css" />
+	<link rel="stylesheet" href="/dist/styles/global.css" />
+	<link rel="stylesheet" href="styles/index.css" />
 
-	<body>
-		<section class="contentWrapper">
-			<header class="videoWrapper">
-				<video
-					autoplay
-					loop
-					muted
-					playsinline
-					poster="./images/splash-vid-first-frame.jpg"
-					class="video"
-				>
-					<source src="videos/splash-video.webm" type="video/webm" />
-					<source src="videos/splash-video.mp4" type="video/mp4" />
-					<p>
-						Your browser doesn't support this embedded video :( Check out Grace's
-						<a href="https://youtube.com/channel/UCrHRRBWgNyX_rMAJCMHqaUQ">Youtube channel</a>
-						instead!
-					</p>
-				</video>
-				<button class="mutebutton" style="animation: shadow-pulse 1s infinite" data-umami-event="Unmute/mute button clicked">
-					<svg
-						class="mutebutton-icon"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						height="40px"
-						width="40px"
-					>
-						<g class="nc-icon-wrapper js-transition-icon" data-effect="scale" data-event="click">
-							<g class="js-transition-icon__state">
-								<title id="IconTitle">Mute</title>
-								<path d="M18 10L22 14M18 14L22 10"></path>
-								<path d="M13 5v14l-5-4H3V9h5z"></path>
-								<path stroke-linecap="round" d="M13 14c1.5-1 1.5-3 0-4"></path>
-							</g>
-							<g class="js-transition-icon__state" style="display: none" aria-hidden="true">
-								<title id="volumeLoudIconTitle">Volume Loud</title>
-								<path d="M13 5v14l-5-4H3V9h5z"></path>
-								<path stroke-linecap="round" d="M13 14c1.5-1 1.5-3 0-4"></path>
-								<path
-									d="M16 16C18.0858253 13.9141747 18.0858253 10.0858253 16 8M18 19C21.98552 15.01448 22.0076803 9.00768033 18 5"
-								></path>
-							</g>
+	<link rel="preload" href="/dist/scripts/menu.js" as="script" />
+	<link rel="preload" href="/dist/scripts/mute.js" as="script" />
+	<script async src="https://analytics.bobber.fyi/script.js" data-website-id="e1e07a18-6a34-4c63-b80b-957af2784353"
+		data-do-not-track="true"></script>
+</head>
+
+<body>
+	<section class="contentWrapper">
+		<header class="videoWrapper">
+			<video autoplay loop muted playsinline poster="./images/splash-vid-first-frame.jpg" class="video">
+				<source src="videos/splash-video.webm" type="video/webm" />
+				<source src="videos/splash-video.mp4" type="video/mp4" />
+				<p>
+					Your browser doesn't support this embedded video :( Check out Grace's
+					<a href="https://youtube.com/channel/UCrHRRBWgNyX_rMAJCMHqaUQ">Youtube channel</a>
+					instead!
+				</p>
+			</video>
+			<button class="mutebutton" style="animation: shadow-pulse 1s infinite"
+				data-umami-event="Unmute/mute button clicked">
+				<svg class="mutebutton-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="40px" width="40px">
+					<g class="nc-icon-wrapper js-transition-icon" data-effect="scale" data-event="click">
+						<g class="js-transition-icon__state">
+							<title id="IconTitle">Mute</title>
+							<path d="M18 10L22 14M18 14L22 10"></path>
+							<path d="M13 5v14l-5-4H3V9h5z"></path>
+							<path stroke-linecap="round" d="M13 14c1.5-1 1.5-3 0-4"></path>
 						</g>
-					</svg>
-				</button>
-				<button class="mobileMenuButton">
-					<svg
-						class="mobileMenuButton-icon"
-						role="img"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						aria-labelledby="hamburgerIconTitle"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<title id="hamburgerIconTitle">Menu</title>
-						<path d="M6 7L18 7M6 12L18 12M6 17L18 17" />
-					</svg>
-				</button>
+						<g class="js-transition-icon__state" style="display: none" aria-hidden="true">
+							<title id="volumeLoudIconTitle">Volume Loud</title>
+							<path d="M13 5v14l-5-4H3V9h5z"></path>
+							<path stroke-linecap="round" d="M13 14c1.5-1 1.5-3 0-4"></path>
+							<path
+								d="M16 16C18.0858253 13.9141747 18.0858253 10.0858253 16 8M18 19C21.98552 15.01448 22.0076803 9.00768033 18 5">
+							</path>
+						</g>
+					</g>
+				</svg>
+			</button>
+			<button class="mobileMenuButton">
+				<svg class="mobileMenuButton-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+					aria-labelledby="hamburgerIconTitle" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<title id="hamburgerIconTitle">Menu</title>
+					<path d="M6 7L18 7M6 12L18 12M6 17L18 17" />
+				</svg>
+			</button>
 
-				<div class="heroWrapper">
-					<section class="heroWrapper-textBlock">
-						<h3 class="heroWrapper-heroName">Grace Bobber</h3>
-						<section class="heroWrapper-linkButtons">
-							<a href="/pages/headshotsresume/" class="heroWrapper-linkButton small-caps"
-								data-umami-event="(homepage) Headshot/Resume button clicked"
-								>Headshot/Resume</a
-							>
-							<a
-								href="https://youtube.com/channel/UCrHRRBWgNyX_rMAJCMHqaUQ"
-								class="heroWrapper-linkButton small-caps"
-								data-umami-event="(homepage) YouTube button clicked"
-								>Youtube</a
-							>
-							<a href="/pages/contact/" class="heroWrapper-linkButton small-caps" data-umami-event="(homepage) Contact button clicked">Contact</a>
-						</section>
+			<div class="heroWrapper">
+				<section class="heroWrapper-textBlock">
+					<h3 class="heroWrapper-heroName">Grace Bobber</h3>
+					<section class="heroWrapper-linkButtons">
+						<a href="/pages/headshotsresume/" class="heroWrapper-linkButton small-caps"
+							data-umami-event="(homepage) Headshot/Resume button clicked">Headshot/Resume</a>
+						<a href="https://youtube.com/channel/UCrHRRBWgNyX_rMAJCMHqaUQ" class="heroWrapper-linkButton small-caps"
+							data-umami-event="(homepage) YouTube button clicked">Youtube</a>
+						<a href="/pages/contact/" class="heroWrapper-linkButton small-caps"
+							data-umami-event="(homepage) Contact button clicked">Contact</a>
 					</section>
-					<!-- Arrow Down -->
-					<footer class="scrollDown">
-						<p class="scrollDown-invite">scroll for more</p>
-						<svg
-							class="scrollDown-arrowDown"
-							role="img"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							aria-labelledby="chevronDownIconTitle"
-							stroke-width="2.25"
-							stroke-linecap="round"
-							stroke-linejoin="miter"
-							fill="none"
-						>
-							<title id="chevronDownIconTitle">Chevron Down</title>
-							<polyline points="6 10 12 16 18 10" />
-						</svg>
-					</footer>
-				</div>
-			</header>
+				</section>
+				<!-- Arrow Down -->
+				<footer class="scrollDown">
+					<p class="scrollDown-invite">scroll for more</p>
+					<svg class="scrollDown-arrowDown" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+						aria-labelledby="chevronDownIconTitle" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="miter"
+						fill="none">
+						<title id="chevronDownIconTitle">Chevron Down</title>
+						<polyline points="6 10 12 16 18 10" />
+					</svg>
+				</footer>
+			</div>
+		</header>
 
-			<nav class="siteNav" id="bio">
-				<a class="siteNav-siteTitle" href="/">
-					<h3>Grace Bobber</h3>
-				</a>
-				<ul class="menuList">
+		<nav class="siteNav" id="bio">
+			<a class="siteNav-siteTitle" href="/">
+				<h3>Grace Bobber</h3>
+			</a>
+			<ul class="menuList">
+				<li>
+					<a class="menuList-link" href="/#bio">Home</a>
+				</li>
+				<li>
+					<a class="menuList-link" href="/news">News</a>
+				</li>
+				<li>
+					<a class="menuList-link" href="#">Media</a>
+					<div class="menuList-dropdown">
+						<a href="/pages/photos" class="small-caps">Photos</a>
+						<a href="/pages/videos" class="small-caps">Videos</a>
+					</div>
+				</li>
+				<li>
+					<a class="menuList-link" href="/pages/headshotsresume/">Headshots & Resume</a>
+				</li>
+				<li>
+					<a class="menuList-link" href="#">Music</a>
+					<div class="menuList-dropdown">
+						<a href="/pages/music/solo.html" class="small-caps">Solo Work</a>
+						<a href="/pages/music/fishercats.html" class="small-caps">The Fisher Cats</a>
+						<a href="/pages/music/thunk.html" class="small-caps">Thunk</a>
+					</div>
+				</li>
+				<li>
+					<a class="menuList-link" href="/pages/contact">Contact</a>
+				</li>
+			</ul>
+			<svg class="siteNav-hamburger" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+				aria-labelledby="hamburgerIconTitle" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<title id="hamburgerIconTitle">Menu</title>
+				<path d="M6 7L18 7M6 12L18 12M6 17L18 17" />
+			</svg>
+		</nav>
+		<div class="swipeOver">
+			<div class="swipeOver-linkListWrapper" style="display: flex; justify-content: space-around; width: 100%">
+				<ul class="swipeOver-linkList">
 					<li>
-						<a class="menuList-link" href="/#bio">Home</a>
+						<a class="swipeOver-link bio-link" href="/#bio">Home</a>
 					</li>
 					<li>
-						<a class="menuList-link" href="/news">News</a>
+						<a class="swipeOver-link" href="/news">News</a>
 					</li>
 					<li>
-						<a class="menuList-link" href="#">Media</a>
-						<div class="menuList-dropdown">
+						<a class="swipeOver-link" href="#">Media</a>
+						<div class="swipeOver-dropdown">
 							<a href="/pages/photos" class="small-caps">Photos</a>
 							<a href="/pages/videos" class="small-caps">Videos</a>
 						</div>
 					</li>
 					<li>
-						<a class="menuList-link" href="/pages/headshotsresume/">Headshots & Resume</a>
+						<a class="swipeOver-link" href="/pages/headshotsresume/">Headshots & Resume</a>
 					</li>
 					<li>
-						<a class="menuList-link" href="#">Music</a>
-						<div class="menuList-dropdown">
+						<a class="swipeOver-link" href="#">Music</a>
+						<div class="swipeOver-dropdown">
 							<a href="/pages/music/solo.html" class="small-caps">Solo Work</a>
 							<a href="/pages/music/fishercats.html" class="small-caps">The Fisher Cats</a>
 							<a href="/pages/music/thunk.html" class="small-caps">Thunk</a>
 						</div>
 					</li>
 					<li>
-						<a class="menuList-link" href="/pages/contact">Contact</a>
+						<a class="swipeOver-link" href="/pages/contact">Contact</a>
 					</li>
 				</ul>
-				<svg
-					class="siteNav-hamburger"
-					role="img"
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24"
-					aria-labelledby="hamburgerIconTitle"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				>
-					<title id="hamburgerIconTitle">Menu</title>
-					<path d="M6 7L18 7M6 12L18 12M6 17L18 17" />
-				</svg>
-			</nav>
-			<div class="swipeOver">
-				<div
-					class="swipeOver-linkListWrapper"
-					style="display: flex; justify-content: space-around; width: 100%"
-				>
-					<ul class="swipeOver-linkList">
-						<li>
-							<a class="swipeOver-link bio-link" href="/#bio">Home</a>
-						</li>
-						<li>
-							<a class="swipeOver-link" href="/news">News</a>
-						</li>
-						<li>
-							<a class="swipeOver-link" href="#">Media</a>
-							<div class="swipeOver-dropdown">
-								<a href="/pages/photos" class="small-caps">Photos</a>
-								<a href="/pages/videos" class="small-caps">Videos</a>
-							</div>
-						</li>
-						<li>
-							<a class="swipeOver-link" href="/pages/headshotsresume/">Headshots & Resume</a>
-						</li>
-						<li>
-							<a class="swipeOver-link" href="#">Music</a>
-							<div class="swipeOver-dropdown">
-								<a href="/pages/music/solo.html" class="small-caps">Solo Work</a>
-								<a href="/pages/music/fishercats.html" class="small-caps">The Fisher Cats</a>
-								<a href="/pages/music/thunk.html" class="small-caps">Thunk</a>
-							</div>
-						</li>
-						<li>
-							<a class="swipeOver-link" href="/pages/contact">Contact</a>
-						</li>
-					</ul>
-				</div>
-				<a class="close">&times;</a>
 			</div>
+			<a class="close">&times;</a>
+		</div>
 
-			<main class="content">
-				<header class="hero">
-					<div class="hero-heroBody">
-						<figure>
-							<blockquote>
-								"The entire ensemble did a superlative job...Some of the outstanding performances
-								featured were supplied by Grace Bobber who is a combustible fireball as Valli’s
-								first wife, Mary Delgado."
-							</blockquote>
-							<figcaption style="font-size: 15px; padding-bottom: 2em">
-								– Chris' Corner, Review of "Jersey Boys" at the Lyceum Theatre
-							</figcaption>
-						</figure>
-						<figure>
-							<blockquote>
-								"[A] standout cast member [was] velvet-voiced Grace Bobber... who shined in the
-								musical style of the show."
-							</blockquote>
-							<figcaption style="font-size: 15px; padding-bottom: 2em">
-								– Scott Gryder, PicksinSix Review of "Hundred Days" at the Chopin Theatre
-							</figcaption>
-						</figure>
-						<h2>Hey there, I'm Grace!</h2>
-						<h2>I'm an actor, musician, and dancer living in Chicago. My pronouns are she/they.</h2>
-					</div>
-				</header>
-				<p>
-					I graduated from Northwestern University with a degree in theater and music. I am proudly
-					represented by
-					<strong>Shirley Hamilton Talent</strong>.
-				</p>
-				<p>
-					You can stay most up-to-date with my other theater and music endeavors by checking out my
-					<a href="https://www.instagram.com/gracecbobber/">Instagram</a> and
-					<a href="https://www.youtube.com/channel/UCrHRRBWgNyX_rMAJCMHqaUQ">Youtube</a>
-					pages. Thanks for stopping by!
-				</p>
-				<footer class="signOff">
-					<p>Warmly,</p>
-					<h3 class="signOff-signature">grace</h3>
-				</footer>
-			</main>
-		</section>
-		<footer class="footer">
-			<div class="footer-linkList">
-				<a href="https://www.facebook.com/gracebobber/" class="footer-links">facebook</a>
-				<span>|</span>
-				<a href="https://www.instagram.com/gracecbobber/" class="footer-links">instagram</a>
-				<span>|</span>
-				<a href="https://www.linkedin.com/in/grace-bobber-18478a190/" class="footer-links"
-					>linkedin</a
-				>
-				<span>|</span>
-				<a href="https://youtube.com/channel/UCrHRRBWgNyX_rMAJCMHqaUQ" class="footer-links"
-					>youtube</a
-				>
-			</div>
-			<p class="footer-byline">
-				Made by
-				<a href="https://www.ajax.computer">Alex Jackson</a>
+		<main class="content">
+			<header class="hero">
+				<div class="hero-heroBody">
+					<figure>
+						<blockquote>
+							"The entire ensemble did a superlative job...Some of the outstanding performances
+							featured were supplied by Grace Bobber who is a combustible fireball as Valli’s
+							first wife, Mary Delgado."
+						</blockquote>
+						<figcaption style="font-size: 15px; padding-bottom: 2em">
+							– Chris' Corner, Review of "Jersey Boys" at the Lyceum Theatre
+						</figcaption>
+					</figure>
+					<figure>
+						<blockquote>
+							"[A] standout cast member [was] velvet-voiced Grace Bobber... who shined in the
+							musical style of the show."
+						</blockquote>
+						<figcaption style="font-size: 15px; padding-bottom: 2em">
+							– Scott Gryder, PicksinSix Review of "Hundred Days" at the Chopin Theatre
+						</figcaption>
+					</figure>
+					<h2>Hey there, I'm Grace!</h2>
+					<h2>I'm an actor, musician, and dancer living in Chicago. My pronouns are she/they.</h2>
+					<h3><i>Currently: Understudying "<a href="https://www.goodmantheatre.org/show/the-penelopiad/"
+								target="_blank">The Penelopiad</a>" at the Goodman Theatre through March 31st.</i></h3>
+				</div>
+			</header>
+			<p>
+				I graduated from Northwestern University with a degree in theater and music. I am proudly
+				represented by
+				<strong>Shirley Hamilton Talent</strong>.
 			</p>
-			<a href="https://github.com/ajaxbits"
-				><svg
-					class="footer-github"
-					role="img"
-					viewBox="0 0 24 24"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<title>GitHub icon</title>
-					<path
-						d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
-					/></svg
-			></a>
-		</footer>
-		<script src="/dist/scripts/menu.js"></script>
-		<script src="/dist/scripts/mute.js"></script>
-		<script src="/scripts/index.js"></script>
-		<script src="/dist/scripts/lazysizes.min.js"></script>
-	</body>
+			<p>
+				You can stay most up-to-date with my other theater and music endeavors by checking out my
+				<a href="https://www.instagram.com/gracecbobber/">Instagram</a> and
+				<a href="https://www.youtube.com/channel/UCrHRRBWgNyX_rMAJCMHqaUQ">Youtube</a>
+				pages. Thanks for stopping by!
+			</p>
+			<footer class="signOff">
+				<p>Warmly,</p>
+				<h3 class="signOff-signature">grace</h3>
+			</footer>
+		</main>
+	</section>
+	<footer class="footer">
+		<div class="footer-linkList">
+			<a href="https://www.facebook.com/gracebobber/" class="footer-links">facebook</a>
+			<span>|</span>
+			<a href="https://www.instagram.com/gracecbobber/" class="footer-links">instagram</a>
+			<span>|</span>
+			<a href="https://www.linkedin.com/in/grace-bobber-18478a190/" class="footer-links">linkedin</a>
+			<span>|</span>
+			<a href="https://youtube.com/channel/UCrHRRBWgNyX_rMAJCMHqaUQ" class="footer-links">youtube</a>
+		</div>
+		<p class="footer-byline">
+			Made by
+			<a href="https://www.ajax.computer">Alex Jackson</a>
+		</p>
+		<a href="https://github.com/ajaxbits"><svg class="footer-github" role="img" viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg">
+				<title>GitHub icon</title>
+				<path
+					d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+			</svg></a>
+	</footer>
+	<script src="/dist/scripts/menu.js"></script>
+	<script src="/dist/scripts/mute.js"></script>
+	<script src="/scripts/index.js"></script>
+	<script src="/dist/scripts/lazysizes.min.js"></script>
+</body>
+
 </html>
