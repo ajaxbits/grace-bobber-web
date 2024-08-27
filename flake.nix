@@ -86,12 +86,6 @@
 
           optimizepng
           optimizejpg
-
-          rust-bin.stable."1.63.0".default
-          openssl
-          pkg-config
-          cargo-edit
-          # cargo-watch
         ];
       };
     });
