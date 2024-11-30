@@ -42,7 +42,7 @@ requests==2.31.0
     # via octodns-cloudflare
 six==1.16.0
     # via python-dateutil
-urllib3==2.1.0
+urllib3==2.2.2
     # via requests
 wheel==0.42.0
     # via pip-tools
